@@ -2,6 +2,7 @@ package com.martaarjona.musicMaster;
 
 import java.io.IOException;
 import java.net.URL;
+import java.util.List;
 import java.util.ResourceBundle;
 
 
@@ -82,12 +83,10 @@ public class PrimaryController{
 	 * @param u
 	 */
 	
-	public void iniAttributtes(ObservableList<UserDAO> users, UserDAO u) {
-		this.users=users;
+	public void iniAttributtes(ObservableList<UserDAO> us, UserDAO u) {
+		this.users=us;
 		user=u;
-		//this.txt_nombre.setText(u.getName());
-		//this.txt_correo.setText(u.getEmail());
-		//this.txt_contrasena.setText(u.getPassword());
+		
 	}
 	
 	/**
@@ -95,7 +94,9 @@ public class PrimaryController{
 	 */
 	@FXML
 	public void initialize() {
+		this.users =FXCollections.observableList(user.getUsers());
 		System.out.println(user);
+		System.out.println(users);
 		
 		this.colId.setCellValueFactory(list->new SimpleStringProperty(list.getValue().getId()+""));
 		this.colNombre.setCellValueFactory(list->new SimpleStringProperty(list.getValue().getName()));
@@ -118,7 +119,7 @@ public class PrimaryController{
 			alert.setContentText("No hay ningun usuario");
 			alert.showAndWait();
 		}else {
-			//this.users.remove(user);
+			this.users.remove(user);
 			user.delete();
 			
 			Alert alert = new Alert(Alert.AlertType.INFORMATION);
@@ -136,10 +137,10 @@ public class PrimaryController{
 		
 		
 		try {
-			RegistroController.iniAttributtes(users,user);
-			FXMLLoader loader = new FXMLLoader(getClass().getResource("registro.fxml"));
+			EditarUserController.iniAttributtes(user);
+			FXMLLoader loader = new FXMLLoader(getClass().getResource("editarUser.fxml"));
 			Parent root = loader.load();
-			RegistroController controlador = loader.getController();
+			EditarUserController controlador = loader.getController();
 			Scene scene = new Scene(root);
 			Stage stage = new Stage();
 			stage.initModality(Modality.APPLICATION_MODAL);

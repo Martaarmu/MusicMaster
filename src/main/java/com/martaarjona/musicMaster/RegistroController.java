@@ -34,10 +34,10 @@ public class RegistroController {
 	
 	/**
 	 * Inicializa la escena
-	 * @param users
+	 * @param users2
 	 */
-	public void iniAttributtes(ObservableList<UserDAO> users) {
-		this.users=users;
+	public void iniAttributtes(List<UserDAO> users2) {
+		this.users=users2;
 	}
 	
 	/**
@@ -46,9 +46,9 @@ public class RegistroController {
 	 * @param u
 	 */
 	
-	public static void iniAttributtes(List<UserDAO> users, UserDAO u) {
-		users=users;
-		u=u;
+	public static void iniAttributtes(List<UserDAO> us, UserDAO user) {
+		users=us;
+		u=user;
 		/*
 		this.txt_nombre.setText(u.getName());
 		this.txt_correo.setText(u.getEmail());
@@ -68,13 +68,14 @@ public class RegistroController {
     	String contrasena = this.txt_contrasena.getText();
     	UserDAO u = new UserDAO(nombre,correo,contrasena);
     	users = FXCollections.observableList(u.getUsers());
-    	if(users.contains(u)) {
+    	if(!users.contains(u)) {
+    		/*
     		//Modificando
     		if(this.user!=null) {
     			this.user.setName(nombre);
     			this.user.setEmail(correo);
     			this.user.setPassword(contrasena);
-    			u.edit();
+    			//u.edit();
     			
     			Alert alert = new Alert(Alert.AlertType.INFORMATION);
 				alert.setHeaderText(null);
@@ -95,6 +96,16 @@ public class RegistroController {
 				alert.showAndWait();
     			
     		}
+    		*/
+    		this.user = u;
+			users.add(u);
+			u.save();
+			
+			Alert alert = new Alert(Alert.AlertType.INFORMATION);
+			alert.setHeaderText(null);
+			alert.setTitle("Info");
+			alert.setContentText("Se ha añadido conrrectamente");
+			alert.showAndWait();
     		Stage stage = (Stage) this.btn_registrar.getScene().getWindow();
     		stage.close();
     	}else {

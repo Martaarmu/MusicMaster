@@ -20,7 +20,7 @@ public class UserDAO extends User{
 	private final static String USERS = "SELECT id,nombre,correo,contrasena FROM usuario";
 	private final static String INICIO ="SELECT id,correo,nombre,contrasena FROM usuario WHERE nombre =? AND contrasena=?";
 	private final static String DELETE = "DELETE FROM usuario WHERE id=?";
-	private final static String UPDATE = "UPDATE usuario SET nombre=?, correo=?, contrasena=? WHERE dni=?";
+	private final static String UPDATE = "UPDATE usuario SET nombre=?, correo=?, contrasena=? WHERE id=?";
 	
 	public UserDAO() {
 		super();
@@ -187,6 +187,7 @@ public class UserDAO extends User{
 				q.setString(1, this.name);
 				q.setString(2, this.email);
 				q.setString(3, this.password);
+				q.setInt(4, this.id);
 				rs = q.executeUpdate();
 			} catch (SQLException e) {
 				// TODO Auto-generated catch block

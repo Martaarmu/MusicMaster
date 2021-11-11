@@ -2,6 +2,8 @@ package com.martaarjona.musicMaster;
 
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 import com.martaarjona.MariaDB.ListReproductionDAO;
 import com.martaarjona.MariaDB.UserDAO;
@@ -33,8 +35,8 @@ public class LoginController {
 	    @FXML
 	    private Button btn_registrarse;
 	    
-	    private UserDAO user=new UserDAO();
-	    private ObservableList<UserDAO> users =FXCollections.observableArrayList();
+	    private UserDAO user = new UserDAO() ;
+	    private  List<UserDAO> users = FXCollections.observableArrayList();
 	    
 	    @FXML
 	    void inicio(ActionEvent event) {
@@ -45,11 +47,8 @@ public class LoginController {
 	    	u.setName(this.txtUsername.getText());
 	    	u.setPassword(this.txtPassword.getText());
 	    	
-	    	System.out.println(u);
+	    	//System.out.println(u);
 	    	System.out.println(users);
-	    	
-	   
-	    	
 	    	
 	    	 if(u.getPassword(u)) {
 	   
