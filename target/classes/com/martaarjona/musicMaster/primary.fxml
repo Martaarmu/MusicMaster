@@ -12,7 +12,7 @@
 
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.martaarjona.musicMaster.PrimaryController">
    <children>
-      <TableView fx:id="tblListas" layoutX="36.0" layoutY="69.0" onMouseClicked="#seleccionar" prefHeight="200.0" prefWidth="224.0">
+      <TableView fx:id="tblListas" layoutX="36.0" layoutY="69.0" onMouseClicked="#seleccionar" prefHeight="117.0" prefWidth="227.0">
         <columns>
           <TableColumn fx:id="colId" prefWidth="44.0" text="Id" />
           <TableColumn fx:id="colNombre" prefWidth="114.00003051757812" text="Nombre" />
@@ -40,6 +40,13 @@
       </ImageView>
       <Button fx:id="btn_todas" layoutX="446.0" layoutY="143.0" mnemonicParsing="false" onAction="#vertodas" prefHeight="25.0" prefWidth="132.0" text="Ver todas" />
       <Button fx:id="btn_borrarlista" layoutX="446.0" layoutY="107.0" mnemonicParsing="false" onAction="#deleteLista" prefHeight="25.0" prefWidth="132.0" text="Borrar lista" />
-      <Button fx:id="btn_actualizar" layoutX="63.0" layoutY="281.0" mnemonicParsing="false" onAction="#actualizar" prefHeight="25.0" prefWidth="143.0" text="Actualizar" />
+      <Button fx:id="btn_actualizar" layoutX="311.0" layoutY="329.0" mnemonicParsing="false" onAction="#actualizar" prefHeight="25.0" prefWidth="143.0" text="Actualizar" />
+      <TableView fx:id="tblSuscripciones" layoutX="36.0" layoutY="201.0" onMouseClicked="#seleccionar" prefHeight="133.0" prefWidth="227.0">
+        <columns>
+          <TableColumn fx:id="colId_suscripcion" prefWidth="75.0" text="Id" />
+          <TableColumn fx:id="colNombre_suscripcion" prefWidth="75.0" text="Nombre" />
+            <TableColumn fx:id="colCreador_suscripcion" prefWidth="75.0" text="Creador" />
+        </columns>
+      </TableView>
    </children>
 </AnchorPane>

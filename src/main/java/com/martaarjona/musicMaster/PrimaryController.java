@@ -66,6 +66,18 @@ public class PrimaryController{
 	private Hyperlink btn_borrar;
 	 @FXML
 	private Hyperlink btn_editarUser;
+	 
+	 @FXML
+	    private TableView<ListReproductionDAO> tblSuscripciones;
+
+	    @FXML
+	    private TableColumn<ListReproductionDAO, String> colId_suscripcion;
+
+	    @FXML
+	    private TableColumn<ListReproductionDAO, String> colNombre_suscripcion;
+
+	    @FXML
+	    private TableColumn<ListReproductionDAO, String> colCreador_suscripcion;
 	
 	
 	
@@ -117,7 +129,14 @@ public class PrimaryController{
 		
 		//this.tblListas.setItems(FXCollections.observableList(ListReproductionDAO.showAll()));
 		this.tblListas.setItems(FXCollections.observableList(ListReproductionDAO.showbyuser(user)));
-		//this.tblListas.setItems(FXCollections.observableList(ListReproductionDAO.showbysuscripcion(user)));
+		
+		this.colId_suscripcion.setCellValueFactory(list->new SimpleStringProperty(list.getValue().getId()+""));
+		this.colNombre_suscripcion.setCellValueFactory(list->new SimpleStringProperty(list.getValue().getName()));
+		this.colCreador_suscripcion.setCellValueFactory(list->new SimpleStringProperty(list.getValue().getCreator().getId()+""));
+		
+		this.tblSuscripciones.setItems(FXCollections.observableList(ListReproductionDAO.showbysuscripcion(user)));
+		
+		this.tblSuscripciones.refresh();
 		this.tblListas.refresh();
 		
 	}
@@ -259,6 +278,8 @@ public class PrimaryController{
 	void actualizar(ActionEvent event) {
 		this.tblListas.setItems(FXCollections.observableList(ListReproductionDAO.showbyuser(user)));
 		this.tblListas.refresh();
+		
+		this.tblSuscripciones.setItems(FXCollections.observableList(ListReproductionDAO.showbysuscripcion(user)));
 	}
 	
 	@FXML

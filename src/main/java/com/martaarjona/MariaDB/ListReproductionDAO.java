@@ -31,8 +31,7 @@ public class ListReproductionDAO extends ListReproduction implements ListDAO {
 	private static final String GETSONGS = "SELECT cancion.id, cancion.nombre, cancion.duracion, cancion.id_genero, cancion.id_disco FROM lista_reproduccion, cancion_lista, cancion WHERE "
 			+ "lista_reproduccion.id=id_lista AND cancion.id=id_cancion AND lista_reproduccion.id=?";
 	private static final String SHOWBYUSER = "SELECT id,nombre,id_usuario FROM lista_reproduccion WHERE id_usuario=?";
-	private static final String SHOWBYSUSCRIPCION = "SELECT l.id,l.nombre,l.id_usuario FROM lista_reproduccion AS l WHERE"
-			+ "l.id_usuario=(SELECT cl.id_lista FROM usuario_lista AS cl WHERE cl.id_usuario=?)";
+	private static final String SHOWBYSUSCRIPCION = "SELECT l.id,l.nombre,l.id_usuario FROM lista_reproduccion AS l ,usuario_lista WHERE usuario_lista.id_lista=l.id AND usuario_lista.id_usuario=?";
 	private static final String DELETELIST = "DELETE FROM lista_reproduccion WHERE id=?";
 
 	public ListReproductionDAO() {
