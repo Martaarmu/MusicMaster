@@ -30,6 +30,10 @@ public class ListReproductionDAO extends ListReproduction implements ListDAO {
 	private final static String DELETE = "DELETE FROM cancion_lista WHERE id_cancion=? AND id_lista=?";
 	private static final String GETSONGS = "SELECT cancion.id, cancion.nombre, cancion.duracion, cancion.id_genero, cancion.id_disco FROM lista_reproduccion, cancion_lista, cancion WHERE "
 			+ "lista_reproduccion.id=id_lista AND cancion.id=id_cancion AND lista_reproduccion.id=?";
+	private static final String SHOWBYUSER = "SELECT id,nombre,id_usuario FROM lista_reproduccion WHERE id_usuario=?";
+	private static final String SHOWBYSUSCRIPCION = "SELECT l.id,l.nombre,l.id_usuario FROM lista_reproduccion AS l WHERE"
+			+ "l.id_usuario=(SELECT cl.id_lista FROM usuario_lista AS cl WHERE cl.id_usuario=?)";
+	private static final String DELETELIST = "DELETE FROM lista_reproduccion WHERE id=?";
 
 	public ListReproductionDAO() {
 		super();
@@ -90,14 +94,31 @@ public class ListReproductionDAO extends ListReproduction implements ListDAO {
 	}
 
 	@Override
-	public void edit() {
+	public int edit() {
+		return id;
 		// TODO Auto-generated method stub
 
 	}
 
 	@Override
-	public void delete() {
+	public int delete() {
 		// TODO Auto-generated method stub
+		int rs = 0;
+		con = Connect.getConnect();
+		if (con != null) {
+			try {
+				PreparedStatement q = con.prepareStatement(DELETELIST);
+				q.setInt(1, this.id);
+				rs = q.executeUpdate();
+				this.id = -1;
+				this.name = "";
+				this.creator=null;
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+		return rs;
 
 	}
 	
@@ -162,12 +183,65 @@ public class ListReproductionDAO extends ListReproduction implements ListDAO {
 		}
 		return result;
 	}
+	/**
+	 * Método que devuelve las listas de reproduccion que ha creado 
+	 * un usuario
+	 */
+	public static List<ListReproductionDAO> showbyuser(UserDAO u) {
+		
+		List<ListReproductionDAO> result = new ArrayList<>();
+		con = Connect.getConnect();
+		if (con != null) {
+			PreparedStatement ps = null;
+			ResultSet rs = null;
+			try {
+				ps = con.prepareStatement(SHOWBYUSER);
+				ps.setInt(1, u.getId());
+				rs = ps.executeQuery();
+				while (rs.next()) {
+					UserDAO ud = new UserDAO();
+					u = (UserDAO) ud.getUserById(rs.getInt("id_usuario"));
+					result.add(new ListReproductionDAO(rs.getInt("id"), rs.getString("nombre"), u));
 
-	@Override
-	public List<ListReproduction> showbyname(String name) {
-
-		return null;
+				}
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+		return result;
 	}
+	/**
+	 * Método que devuelve las listas de reproduccion a las que
+	 * se ha suscrito un usuario
+	 * @param u
+	 * @return
+	 */
+public static List<ListReproductionDAO> showbysuscripcion(UserDAO u) {
+		
+		List<ListReproductionDAO> result = new ArrayList<>();
+		con = Connect.getConnect();
+		if (con != null) {
+			PreparedStatement ps = null;
+			ResultSet rs = null;
+			try {
+				ps = con.prepareStatement(SHOWBYSUSCRIPCION);
+				ps.setInt(1, u.getId());
+				rs = ps.executeQuery();
+				while(rs.next()) {
+					UserDAO ud = new UserDAO();
+					u = (UserDAO) ud.getUserById(rs.getInt("id_usuario"));
+					result.add(new ListReproductionDAO(rs.getInt("id"), rs.getString("nombre"), u));
+				}
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+		return result;
+	}
+
+	
 	
 
 	@Override

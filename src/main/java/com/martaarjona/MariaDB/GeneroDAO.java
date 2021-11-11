@@ -11,7 +11,7 @@ import com.martaarjona.dao.IDAO;
 import com.martaarjona.model.Genero;
 import com.martaarjona.utils.Connect;
 
-public class GeneroDAO extends Genero implements IDAO<Genero>{
+public class GeneroDAO extends Genero{
 	
 	private static final String GETGENEROBYID="SELECT id,nombre FROM genero WHERE id=?";
 	
@@ -48,19 +48,5 @@ public class GeneroDAO extends Genero implements IDAO<Genero>{
 		List<Genero> result = new ArrayList<>();
 		return result;
 	}
-	@Override
-	public void save() {
-		// TODO Auto-generated method stub
-		
-	}
-	@Override
-	public void edit() {
-		// TODO Auto-generated method stub
-		
-	}
-	@Override
-	public void delete() {
-		// TODO Auto-generated method stub
-		
-	}
+
 }

@@ -42,7 +42,13 @@ public class PrimaryController{
 	private Button btnBorrar;
 	@FXML
 	private Button btn_addList;
-	
+	@FXML
+	private Button btn_todas;
+	@FXML
+	private Button btn_borrarlista;
+
+	@FXML
+	private Button btn_actualizar;
 	@FXML
 	private TableView<ListReproductionDAO> tblListas;
 	@FXML
@@ -59,7 +65,7 @@ public class PrimaryController{
 	 @FXML
 	private Hyperlink btn_borrar;
 	 @FXML
-		private Hyperlink btn_editarUser;
+	private Hyperlink btn_editarUser;
 	
 	
 	
@@ -69,6 +75,7 @@ public class PrimaryController{
 	private ObservableList<UserDAO> users;
 	private static UserDAO user;
 	private static ListReproductionDAO list;
+	private static List<ListReproductionDAO> mislistas;
 	
 	/**
 	 * Inicializa la escena
@@ -88,6 +95,9 @@ public class PrimaryController{
 		user=u;
 		
 	}
+	public static void iniAttributtes(List<ListReproductionDAO>listas) {
+		mislistas = listas;
+	}
 	
 	/**
 	 * Inicializa la escena
@@ -98,13 +108,16 @@ public class PrimaryController{
 		System.out.println(user);
 		System.out.println(users);
 		
+		
 		this.colId.setCellValueFactory(list->new SimpleStringProperty(list.getValue().getId()+""));
 		this.colNombre.setCellValueFactory(list->new SimpleStringProperty(list.getValue().getName()));
 		this.colCreador.setCellValueFactory(list->new SimpleStringProperty(list.getValue().getCreator().getId()+""));
 		
+
 		
-		
-		this.tblListas.setItems(FXCollections.observableList(ListReproductionDAO.showAll()));
+		//this.tblListas.setItems(FXCollections.observableList(ListReproductionDAO.showAll()));
+		this.tblListas.setItems(FXCollections.observableList(ListReproductionDAO.showbyuser(user)));
+		//this.tblListas.setItems(FXCollections.observableList(ListReproductionDAO.showbysuscripcion(user)));
 		this.tblListas.refresh();
 		
 	}
@@ -135,7 +148,6 @@ public class PrimaryController{
 	@FXML
 	private void editUser (ActionEvent event) {
 		
-		
 		try {
 			EditarUserController.iniAttributtes(user);
 			FXMLLoader loader = new FXMLLoader(getClass().getResource("editarUser.fxml"));
@@ -159,7 +171,8 @@ public class PrimaryController{
 		ListReproductionDAO l = (ListReproductionDAO) this.tblListas.getSelectionModel().getSelectedItem();
 		songs = FXCollections.observableArrayList();
 		this.tblCanciones.setItems(FXCollections.observableList(l.getsongsbyid(l.getId())));
-		this.colCancion.setCellValueFactory(list->new SimpleStringProperty(list.getValue().getId()+""));
+		//this.colCancion.setCellValueFactory(list->new SimpleStringProperty(list.getValue().getId()+""));
+		this.colCancion.setCellValueFactory(list->new SimpleStringProperty(list.getValue().getName()));
 		//this.colCancion.setCellValueFactory(new PropertyValueFactory("name"));
 		
 		ObservableList<SongDAO> items = FXCollections.observableList(l.getsongsbyid(l.getId()));
@@ -185,6 +198,21 @@ public class PrimaryController{
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+		this.tblListas.refresh();
+		
+	}
+	
+	@FXML
+	void deleteLista (ActionEvent event) {
+		list = (ListReproductionDAO) this.tblListas.getSelectionModel().getSelectedItem();
+		
+		list.delete();
+		
+		Alert alert = new Alert(Alert.AlertType.INFORMATION);
+		alert.setHeaderText(null);
+		alert.setTitle("Info");
+		alert.setContentText("Lista eliminada con éxito");
+		alert.showAndWait();
 		
 	}
 	
@@ -227,6 +255,37 @@ public class PrimaryController{
 		alert.showAndWait();
 	}
 	
+	@FXML
+	void actualizar(ActionEvent event) {
+		this.tblListas.setItems(FXCollections.observableList(ListReproductionDAO.showbyuser(user)));
+		this.tblListas.refresh();
+	}
+	
+	@FXML
+	void vertodas(ActionEvent event) {
+		
+		try {
+			TodasListasController.iniAttributtes(user,list);
+			FXMLLoader loader = new FXMLLoader(getClass().getResource("todaslistas.fxml"));
+			Parent root = loader.load();
+			TodasListasController controlador = loader.getController();
+			Scene scene = new Scene(root);
+			Stage stage = new Stage();
+			stage.setScene(scene);
+			stage.showAndWait();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		//this.tblListas.setItems(FXCollections.observableList(ListReproductionDAO.showbysuscripcion(user)));
+		//System.out.println(ListReproductionDAO.showbysuscripcion(user));
+		//this.tblListas.setItems(FXCollections.observableList(ListReproductionDAO.showbyuser(user)));
+		//System.out.println(ListReproductionDAO.showbyuser(user));
+		//this.tblListas.refresh();
+		
+		
+		
+	}
 	
 	
 	

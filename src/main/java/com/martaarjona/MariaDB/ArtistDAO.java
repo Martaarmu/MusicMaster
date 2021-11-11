@@ -12,7 +12,7 @@ import com.martaarjona.model.Artist;
 import com.martaarjona.model.Genero;
 import com.martaarjona.utils.Connect;
 
-public class ArtistDAO extends Artist implements IDAO<Artist>{
+public class ArtistDAO extends Artist {
 
 	private static String GETARTISTBYID="SELECT id,nombre,nacionalidad,foto FROM artista";
 	
@@ -53,22 +53,5 @@ public class ArtistDAO extends Artist implements IDAO<Artist>{
 		return result;
 	}
 	
-	@Override
-	public void save() {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void edit() {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void delete() {
-		// TODO Auto-generated method stub
-		
-	}
 
 }

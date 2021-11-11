@@ -4,8 +4,8 @@ import java.util.List;
 
 public interface IDAO<T> {
 	void save();
-	void edit();
-	void delete();
+	int edit();
+	int delete();
 	//List<T> showAll();
 	
 }

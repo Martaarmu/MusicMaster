@@ -15,7 +15,7 @@ import com.martaarjona.model.Genero;
 import com.martaarjona.model.Song;
 import com.martaarjona.utils.Connect;
 
-public class SongDAO extends Song implements IDAO<Song>{
+public class SongDAO extends Song{
 
 	private static final String SHOWALL = "SELECT  id,nombre,duracion,id_genero,id_disco FROM cancion";
 	
@@ -67,23 +67,6 @@ public class SongDAO extends Song implements IDAO<Song>{
 		}
 		return result;
 	}
-	@Override
-	public void save() {
-		
-		// TODO Auto-generated method stub
-		
-	}
 
-	@Override
-	public void edit() {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void delete() {
-		// TODO Auto-generated method stub
-		
-	}
 
 }

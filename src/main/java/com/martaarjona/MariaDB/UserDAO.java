@@ -21,6 +21,7 @@ public class UserDAO extends User{
 	private final static String INICIO ="SELECT id,correo,nombre,contrasena FROM usuario WHERE nombre =? AND contrasena=?";
 	private final static String DELETE = "DELETE FROM usuario WHERE id=?";
 	private final static String UPDATE = "UPDATE usuario SET nombre=?, correo=?, contrasena=? WHERE id=?";
+	private final static String SUSCRIBE ="INSERT INTO usuario_lista (id_usuario, id_lista) VALUES (?,?)";
 	
 	public UserDAO() {
 		super();
@@ -47,7 +48,11 @@ public class UserDAO extends User{
 	}
 	private Connection con = null;
 	
-	
+	/**
+	 * Método que obtiene un usuario mediante su id
+	 * @param id
+	 * @return User
+	 */
 	public User getUserById(int id) {
 		
 		User u = new UserDAO();
@@ -113,6 +118,12 @@ public class UserDAO extends User{
 		return users;
 	}
 	
+	/**
+	 * Método para comprobar si en la BD si existe un usuario 
+	 * con un nombre y una contraseña dados
+	 * @param u
+	 * @return
+	 */
 	public boolean getPassword(UserDAO u) {
 		boolean result=false;
 		con = Connect.getConnect();
@@ -176,7 +187,10 @@ public class UserDAO extends User{
 		
 	}
 
-	
+	/**
+	 * Edita los campos de un usuario en la BD
+	 * @return
+	 */
 	public int edit() {
 		// TODO Auto-generated method stub
 		int rs = 0;
@@ -223,6 +237,23 @@ public class UserDAO extends User{
 		
 	}
 	
+	public int suscribe(UserDAO u, ListReproductionDAO l) {
+		int rs=0;
+		con = Connect.getConnect();
+		if (con != null) {
+			try {
+				PreparedStatement q = con.prepareStatement(SUSCRIBE);
+				q.setInt(1, u.getId());
+				q.setInt(2, l.getId());
+				rs = q.executeUpdate();
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+
+		}
+		return rs;
+	}
 	
 	
 	 

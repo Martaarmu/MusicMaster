@@ -8,6 +8,7 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
+import javafx.stage.Stage;
 
 public class ListaController {
 	
@@ -40,6 +41,9 @@ public class ListaController {
 		alert.setTitle("Info");
 		alert.setContentText("Lista creada con éxito");
 		alert.showAndWait();
+		
+		Stage stage = (Stage) this.btn_crear.getScene().getWindow();
+		stage.close();
 		
     }
 }

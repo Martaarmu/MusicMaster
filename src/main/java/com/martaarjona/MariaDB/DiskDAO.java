@@ -15,7 +15,7 @@ import com.martaarjona.model.Genero;
 import com.martaarjona.model.Song;
 import com.martaarjona.utils.Connect;
 
-public class DiskDAO extends Disk implements IDAO<Disk>{
+public class DiskDAO extends Disk {
 
 	private static final String GETDISKBYID ="SELECT id,nombre,fecha,id_artista FROM disco";
 	public DiskDAO(int id, String name, Date date, Artist artist) {
@@ -58,22 +58,6 @@ public class DiskDAO extends Disk implements IDAO<Disk>{
 		List<Disk> result = new ArrayList<>();
 		return result;
 	}
-	@Override
-	public void save() {
-		// TODO Auto-generated method stub
-		
-	}
 
-	@Override
-	public void edit() {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void delete() {
-		// TODO Auto-generated method stub
-		
-	}
 
 }
