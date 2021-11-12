@@ -3,6 +3,7 @@ package com.martaarjona.musicMaster;
 import java.io.IOException;
 import java.net.URL;
 import java.util.List;
+import java.util.Optional;
 import java.util.ResourceBundle;
 
 
@@ -25,6 +26,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
+import javafx.scene.control.ButtonType;
 import javafx.scene.control.Hyperlink;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
@@ -49,6 +51,8 @@ public class PrimaryController{
 
 	@FXML
 	private Button btn_actualizar;
+	@FXML
+	private Button btn_des_suscribe;
 	@FXML
 	private TableView<ListReproductionDAO> tblListas;
 	@FXML
@@ -151,17 +155,34 @@ public class PrimaryController{
 			alert.setContentText("No hay ningun usuario");
 			alert.showAndWait();
 		}else {
-			this.users.remove(user);
-			user.delete();
 			
-			Alert alert = new Alert(Alert.AlertType.INFORMATION);
-			alert.setHeaderText(null);
-			alert.setTitle("Info");
-			alert.setContentText("Usuario eliminado");
-			alert.showAndWait();
+			Alert alert1 = new Alert(Alert.AlertType.CONFIRMATION);
+			alert1.setHeaderText(null);
+			alert1.setTitle("AVISO");
+			alert1.setContentText("¿Estas seguro de que quiere eliminar su cuenta?");
+			//alert1.showAndWait();
+			Optional<ButtonType> result = alert1.showAndWait();
+			if (result.get() == ButtonType.OK){
+			    // ... user chose OK
+				this.users.remove(user);
+				user.delete();
+				
+				Alert alert = new Alert(Alert.AlertType.INFORMATION);
+				alert.setHeaderText(null);
+				alert.setTitle("Info");
+				alert.setContentText("Usuario eliminado");
+				alert.showAndWait();
+				Stage stage = (Stage) this.btn_borrar.getScene().getWindow();
+				stage.close();
+				
+			} else {
+			    // ... user chose CANCEL or closed the dialog
+				
+				//
+			}
+			
 		}
-		Stage stage = (Stage) this.btn_borrar.getScene().getWindow();
-		stage.close();
+		
 	}
 	
 	@FXML
@@ -190,15 +211,25 @@ public class PrimaryController{
 		ListReproductionDAO l = (ListReproductionDAO) this.tblListas.getSelectionModel().getSelectedItem();
 		songs = FXCollections.observableArrayList();
 		this.tblCanciones.setItems(FXCollections.observableList(l.getsongsbyid(l.getId())));
-		//this.colCancion.setCellValueFactory(list->new SimpleStringProperty(list.getValue().getId()+""));
 		this.colCancion.setCellValueFactory(list->new SimpleStringProperty(list.getValue().getName()));
-		//this.colCancion.setCellValueFactory(new PropertyValueFactory("name"));
 		
 		ObservableList<SongDAO> items = FXCollections.observableList(l.getsongsbyid(l.getId()));
 		this.tblCanciones.setItems(items);
-		
+
 	}
-	
+	@FXML
+	private void seleccionar1(MouseEvent event) {
+		
+		
+		ListReproductionDAO l1 = (ListReproductionDAO) this.tblSuscripciones.getSelectionModel().getSelectedItem();
+		songs = FXCollections.observableArrayList();
+		
+		this.tblCanciones.setItems(FXCollections.observableList(l1.getsongsbyid(l1.getId())));
+		this.colCancion.setCellValueFactory(list->new SimpleStringProperty(list.getValue().getName()));
+		
+		ObservableList<SongDAO> items = FXCollections.observableList(l1.getsongsbyid(l1.getId()));
+		this.tblCanciones.setItems(items);
+	}
 	@FXML
 	void addList(ActionEvent event) {
 
@@ -223,16 +254,24 @@ public class PrimaryController{
 	
 	@FXML
 	void deleteLista (ActionEvent event) {
+		
 		list = (ListReproductionDAO) this.tblListas.getSelectionModel().getSelectedItem();
 		
-		list.delete();
-		
-		Alert alert = new Alert(Alert.AlertType.INFORMATION);
-		alert.setHeaderText(null);
-		alert.setTitle("Info");
-		alert.setContentText("Lista eliminada con éxito");
-		alert.showAndWait();
-		
+		if(list==null) {
+			Alert alert = new Alert(Alert.AlertType.ERROR);
+			alert.setHeaderText(null);
+			alert.setTitle("Error");
+			alert.setContentText("Debes seleccionar una lista");
+			alert.showAndWait();
+		}else {
+			list.delete();
+			
+			Alert alert = new Alert(Alert.AlertType.INFORMATION);
+			alert.setHeaderText(null);
+			alert.setTitle("Info");
+			alert.setContentText("Lista eliminada con éxito");
+			alert.showAndWait();
+		}
 	}
 	
 	@FXML
@@ -241,37 +280,52 @@ public class PrimaryController{
 		
 		list = (ListReproductionDAO) this.tblListas.getSelectionModel().getSelectedItem();
 		
-		try {
-			SecondaryController.iniAttributtes(user,list);
-			FXMLLoader loader = new FXMLLoader(getClass().getResource("secondary.fxml"));
-			Parent root = loader.load();
-			SecondaryController controlador = loader.getController();
-			Scene scene = new Scene(root);
-			Stage stage = new Stage();
-			stage.setScene(scene);
-			stage.showAndWait();
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+		if(list==null) {
+			Alert alert = new Alert(Alert.AlertType.ERROR);
+			alert.setHeaderText(null);
+			alert.setTitle("Error");
+			alert.setContentText("Debes seleccionar una lista");
+			alert.showAndWait();
+		}else {
+			try {
+				SecondaryController.iniAttributtes(user,list);
+				FXMLLoader loader = new FXMLLoader(getClass().getResource("secondary.fxml"));
+				Parent root = loader.load();
+				SecondaryController controlador = loader.getController();
+				Scene scene = new Scene(root);
+				Stage stage = new Stage();
+				stage.setScene(scene);
+				stage.showAndWait();
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			
 		}
+		
 		
 	}
 	@FXML
 	void deleteSong(ActionEvent event) {
-		//list.getId();
+		
 		list = (ListReproductionDAO) this.tblListas.getSelectionModel().getSelectedItem();
 		SongDAO s = (SongDAO) this.tblCanciones.getSelectionModel().getSelectedItem();
-	
-		//System.out.println(list.getsongsbyid(list.getId()));
-		//System.out.println(s);
-		System.out.println(list.getsongsbyid(list.getId()));
-		list.removeSong(s,list);
 		
-		Alert alert = new Alert(Alert.AlertType.INFORMATION);
-		alert.setHeaderText(null);
-		alert.setTitle("Info");
-		alert.setContentText("Canción eliminada con éxito");
-		alert.showAndWait();
+		if(s==null) {
+			Alert alert = new Alert(Alert.AlertType.ERROR);
+			alert.setHeaderText(null);
+			alert.setTitle("Error");
+			alert.setContentText("Debes seleccionar una canción");
+			alert.showAndWait();
+		}else {
+			list.removeSong(s,list);
+			
+			Alert alert = new Alert(Alert.AlertType.INFORMATION);
+			alert.setHeaderText(null);
+			alert.setTitle("Info");
+			alert.setContentText("Canción eliminada con éxito");
+			alert.showAndWait();
+		}
 	}
 	
 	@FXML
@@ -298,15 +352,32 @@ public class PrimaryController{
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		//this.tblListas.setItems(FXCollections.observableList(ListReproductionDAO.showbysuscripcion(user)));
-		//System.out.println(ListReproductionDAO.showbysuscripcion(user));
-		//this.tblListas.setItems(FXCollections.observableList(ListReproductionDAO.showbyuser(user)));
-		//System.out.println(ListReproductionDAO.showbyuser(user));
-		//this.tblListas.refresh();
-		
-		
 		
 	}
+	
+	@FXML
+	void dessubcribe(ActionEvent event) {
+		
+		list= (ListReproductionDAO) this.tblSuscripciones.getSelectionModel().getSelectedItem();
+		
+		if(list==null) {
+			Alert alert = new Alert(Alert.AlertType.ERROR);
+			alert.setHeaderText(null);
+			alert.setTitle("Error");
+			alert.setContentText("Debes seleccionar una lista");
+			alert.showAndWait();
+		}else {
+			user.des_suscribe(user,list);
+			
+			Alert alert = new Alert(Alert.AlertType.INFORMATION);
+			alert.setHeaderText(null);
+			alert.setTitle("Info");
+			alert.setContentText("Lista eliminada con éxito");
+			alert.showAndWait();
+		}
+		
+	}
+	
 	
 	
 	

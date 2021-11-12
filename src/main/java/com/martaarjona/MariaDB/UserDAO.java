@@ -22,6 +22,7 @@ public class UserDAO extends User{
 	private final static String DELETE = "DELETE FROM usuario WHERE id=?";
 	private final static String UPDATE = "UPDATE usuario SET nombre=?, correo=?, contrasena=? WHERE id=?";
 	private final static String SUSCRIBE ="INSERT INTO usuario_lista (id_usuario, id_lista) VALUES (?,?)";
+	private final static String DES_SUSCRIBE ="DELETE FROM usuario_lista WHERE id_usuario=? AND id_lista=?";
 	
 	public UserDAO() {
 		super();
@@ -237,6 +238,13 @@ public class UserDAO extends User{
 		
 	}
 	
+	/**
+	 * Método que permite al usuario seguir una lista
+	 * @param u
+	 * @param l
+	 * @return
+	 */
+	
 	public int suscribe(UserDAO u, ListReproductionDAO l) {
 		int rs=0;
 		con = Connect.getConnect();
@@ -255,6 +263,29 @@ public class UserDAO extends User{
 		return rs;
 	}
 	
+	/**
+	 * Método que permite al usuario dejar de seguir una lista
+	 * @param u
+	 * @param l
+	 * @return
+	 */
+	public int des_suscribe(UserDAO u, ListReproductionDAO l) {
+		int rs=0;
+		con = Connect.getConnect();
+		if (con != null) {
+			try {
+				PreparedStatement q = con.prepareStatement(DES_SUSCRIBE);
+				q.setInt(1, u.getId());
+				q.setInt(2, l.getId());
+				rs = q.executeUpdate();
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+
+		}
+		return rs;
+	}
 	
 	 
 	

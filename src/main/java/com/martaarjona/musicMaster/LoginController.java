@@ -47,8 +47,7 @@ public class LoginController {
 	    	u.setName(this.txtUsername.getText());
 	    	u.setPassword(this.txtPassword.getText());
 	    	
-	    	//System.out.println(u);
-	    	System.out.println(users);
+	    	
 	    	
 	    	 if(u.getPassword(u)) {
 	   

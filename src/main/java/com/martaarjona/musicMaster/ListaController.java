@@ -34,16 +34,27 @@ public class ListaController {
 		ListReproductionDAO l = new ListReproductionDAO();
 		l.setName(this.txt_name.getText());
 		l.setCreator(user);
-		l.save();
 		
-		Alert alert = new Alert(Alert.AlertType.INFORMATION);
-		alert.setHeaderText(null);
-		alert.setTitle("Info");
-		alert.setContentText("Lista creada con éxito");
-		alert.showAndWait();
+		if(l.getName().isEmpty()) {
+			
+			Alert alert = new Alert(Alert.AlertType.ERROR);
+			alert.setHeaderText(null);
+			alert.setTitle("Error");
+			alert.setContentText("Debe rellenar los campos");
+			alert.showAndWait();
+		}else {
+			l.save();
+			
+			Alert alert = new Alert(Alert.AlertType.INFORMATION);
+			alert.setHeaderText(null);
+			alert.setTitle("Info");
+			alert.setContentText("Lista creada con éxito");
+			alert.showAndWait();
+			
+			Stage stage = (Stage) this.btn_crear.getScene().getWindow();
+			stage.close();
+		}
 		
-		Stage stage = (Stage) this.btn_crear.getScene().getWindow();
-		stage.close();
 		
     }
 }

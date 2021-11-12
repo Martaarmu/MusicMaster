@@ -32,19 +32,6 @@ public class Song {
 		this.nReproducciones = nReproducciones;
 		this.disk = disk;
 	}
-	
-	
-
-
-
-
-	public Song(String name, Time duration, Genero genero) {
-		super();
-		this.name = name;
-		this.duration = duration;
-		this.genero = genero;
-	}
-
 
 	public Song() {
 		// TODO Auto-generated constructor stub
