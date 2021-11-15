@@ -10,7 +10,6 @@ public class User {
 	protected String photo;
 	protected String password;
 	protected List<ListReproduction> list;
-	// protected List<Reproduction> reproductions;
 
 	public User(String name, String email, String password) {
 		super();

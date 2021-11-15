@@ -15,16 +15,30 @@ import com.martaarjona.model.Genero;
 import com.martaarjona.model.Song;
 import com.martaarjona.utils.Connect;
 
-public class DiskDAO extends Disk {
+import javafx.css.PseudoClass;
+
+public class DiskDAO extends Disk implements IDAO<Disk>{
 
 	private static final String GETDISKBYID ="SELECT id,nombre,fecha,id_artista FROM disco";
+	private static final String INSERT = "INSERT INTO disco (nombre,fecha,id_artista)"
+										+ "VALUES (?,?,?)";
+	private static final String UPDATE = "UPDATE disco SET nombre=?, fecha=?,"
+										+ "id_artista=? WHERE id=?";
+	private static final String DELETE = "DELETE FROM disco WHERE id=?";
+	
 	public DiskDAO(int id, String name, Date date, Artist artist) {
 		super(id,name,date,artist);
 		
 	}
 	public DiskDAO() {}
+	
 	private Connection con = null;
 	
+	/**
+	 * Método que trae un disco por su id
+	 * @param id
+	 * @return
+	 */
 	public Disk getDiskById(int id) {
 		Disk d = new DiskDAO();
 		con=Connect.getConnect();
@@ -35,7 +49,6 @@ public class DiskDAO extends Disk {
 			
 			try {
 				ps = con.prepareStatement(GETDISKBYID);
-			//	ps.setInt(1, id);
 				rs=ps.executeQuery();
 				if(rs.next()) {
 					
@@ -50,13 +63,87 @@ public class DiskDAO extends Disk {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-	
 		}
 		return d;
 	}
+	
+	
 	public List<Disk> showAll(){
 		List<Disk> result = new ArrayList<>();
 		return result;
+	}
+	
+	/**
+	 * Método que permite guardar un disco en la BD
+	 */
+	@Override
+	public int save() {
+		// TODO Auto-generated method stub
+		int rs=0;
+		con = Connect.getConnect();
+		if(con!=null) {
+			try {
+				PreparedStatement ps = con.prepareStatement(INSERT);
+				ps.setString(1, this.name);
+				//ps.setDate(2, this.date);
+				ps.setInt(3, this.artist.getId());
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			
+		}
+		return rs;
+	}
+	
+	/**
+	 * Método que permite editar un disco de la BD
+	 */
+	@Override
+	public int edit() {
+		// TODO Auto-generated method stub
+		int rs=0;
+		con = Connect.getConnect();
+		if(con!=null) {
+			try {
+				PreparedStatement ps = con.prepareStatement(UPDATE);
+				ps.setString(1, this.name);
+				//ps.setDate(2, this.date);
+				ps.setInt(3, this.artist.getId());
+				ps.setInt(4, this.id);
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			
+		}
+		return rs;
+	}
+	
+	/**
+	 * Método que permite borrar un disco de la BD
+	 */
+	@Override
+	public int delete() {
+		// TODO Auto-generated method stub
+		int rs = 0;
+		con = Connect.getConnect();
+		if (con != null) {
+			try {
+				PreparedStatement q = con.prepareStatement(DELETE);
+				q.setInt(1, this.id);
+				rs = q.executeUpdate();
+				this.id = -1;
+				this.name = "";
+				this.date=null;
+				this.artist = null;
+				
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+		return rs;
 	}
 
 

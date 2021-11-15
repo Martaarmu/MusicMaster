@@ -12,7 +12,7 @@ import com.martaarjona.model.ListReproduction;
 import com.martaarjona.model.User;
 import com.martaarjona.utils.Connect;
 
-public class UserDAO extends User{
+public class UserDAO extends User implements IDAO<User>{
 	
 	
 	private static final String GETUSERBYID="SELECT id,nombre,correo FROM usuario WHERE id=?";
@@ -164,7 +164,7 @@ public class UserDAO extends User{
 	 * @return
 	 */
 	
-	
+	@Override
 	public int save() {
 		// TODO Auto-generated method stub
 		int rs=0;
@@ -192,6 +192,7 @@ public class UserDAO extends User{
 	 * Edita los campos de un usuario en la BD
 	 * @return
 	 */
+	@Override
 	public int edit() {
 		// TODO Auto-generated method stub
 		int rs = 0;
@@ -216,6 +217,7 @@ public class UserDAO extends User{
 	/**
 	 * Elimina un usuario de la BD
 	 */
+	@Override
 	public int delete() {
 		// TODO Auto-generated method stub
 		int rs = 0;

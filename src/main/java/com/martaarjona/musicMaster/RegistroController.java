@@ -51,10 +51,6 @@ public class RegistroController {
 	public static void iniAttributtes(List<UserDAO> us, UserDAO user) {
 		users = us;
 		u = user;
-		/*
-		 * this.txt_nombre.setText(u.getName()); this.txt_correo.setText(u.getEmail());
-		 * this.txt_contrasena.setText(u.getPassword());
-		 */
 	}
 
 	/**

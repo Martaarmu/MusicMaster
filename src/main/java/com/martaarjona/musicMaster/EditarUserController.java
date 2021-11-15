@@ -16,66 +16,69 @@ import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 
 public class EditarUserController {
-	
+
 	@FXML
-    private  TextField txtNombre;
+	private TextField txtNombre;
 
-    @FXML
-    private  TextField txtCorreo;
+	@FXML
+	private TextField txtCorreo;
 
-    @FXML
-    private  TextField txtContrasena;
+	@FXML
+	private TextField txtContrasena;
 
-    @FXML
-    private Button btnEditar;
-    
-    private static UserDAO u;
-    private  ObservableList<UserDAO> users;
+	@FXML
+	private Button btnEditar;
+
+	private static UserDAO u;
+	private ObservableList<UserDAO> users;
+
 	/**
 	 * Inicializa los atributos de la escena
-	 * @param users
 	 * @param u
 	 */
-	
+
 	public static void iniAttributtes(UserDAO user) {
-		//users=us;
-		u=user;
-		
-		
-		
+		u = user;
 	}
+	/**
+	 * Inicializa la escena
+	 */
+
 	@FXML
 	public void initialize() {
-		this.users =FXCollections.observableList(u.getUsers());
+		this.users = FXCollections.observableList(u.getUsers());
 		System.out.println(u);
 		System.out.println(users);
 		this.txtNombre.setText(u.getName());
 		this.txtCorreo.setText(u.getEmail());
 		this.txtContrasena.setText(u.getPassword());
-		
-	
-		
+
 	}
-	
-    @FXML
-    void editUser(ActionEvent event) {
-    	
-    	if(this.u!=null) {
+
+	/**
+	 * Método para actualizar el usuario
+	 * 
+	 * @param event
+	 */
+	@FXML
+	void editUser(ActionEvent event) {
+
+		if (this.u != null) {
 			this.u.setName(this.txtNombre.getText());
 			this.u.setEmail(this.txtCorreo.getText());
 			this.u.setPassword(this.txtContrasena.getText());
 			u.edit();
-			
+
 			Alert alert = new Alert(Alert.AlertType.INFORMATION);
 			alert.setHeaderText(null);
 			alert.setTitle("Info");
 			alert.setContentText("Se ha modificado conrrectamente");
 			alert.showAndWait();
-			
+
 			Stage stage = (Stage) this.btnEditar.getScene().getWindow();
 			stage.close();
-    	
-    }
-    }
-    
+
+		}
+	}
+
 }

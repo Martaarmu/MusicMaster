@@ -15,58 +15,149 @@ import com.martaarjona.model.Genero;
 import com.martaarjona.model.Song;
 import com.martaarjona.utils.Connect;
 
-public class SongDAO extends Song{
+import javafx.css.PseudoClass;
+
+public class SongDAO extends Song implements IDAO<Song> {
 
 	private static final String SHOWALL = "SELECT  id,nombre,duracion,id_genero,id_disco FROM cancion";
-	
-	public SongDAO(int id,String name, Time duration, Genero genero, Disk disk) {
+	private static final String INSERT = "INSERT INTO cancion (nombre,duracion,id_genero,id_disco)" + "VALUES(?,?,?,?)";
+	private static final String UPDATE = "UPDATE cancion SET nombre=?, duracion=?, id_genero=?,"
+			+ " id_disco=? WHERE id=?";
+	private static final String DELETE = "DELETE FROM cancion WHERE id=?";
+
+	public SongDAO(int id, String name, Time duration, Genero genero, Disk disk) {
 		super(id, name, duration, genero, disk);
 		// TODO Auto-generated constructor stub
 	}
-	
+
 	public SongDAO(String name, Time duration, Genero genero, int nReproducciones, Disk disk) {
 		super(name, duration, genero, nReproducciones, disk);
 		// TODO Auto-generated constructor stub
 	}
-	
+
 	public SongDAO() {
 		// TODO Auto-generated constructor stub
 	}
 
 	private static Connection con = null;
-	
+
+	/**
+	 * Método que muestra todas las canciones de una lista
+	 * 
+	 * @return
+	 */
 	public static List<SongDAO> showAll() {
 		List<SongDAO> result = new ArrayList<>();
 		con = Connect.getConnect();
-		if(con!=null) {
+		if (con != null) {
 			PreparedStatement ps = null;
 			ResultSet rs = null;
-			
+
 			try {
 				ps = con.prepareStatement(SHOWALL);
 				rs = ps.executeQuery();
-				
-				while(rs.next()) {
-					
+
+				while (rs.next()) {
+
 					GeneroDAO gd = new GeneroDAO();
 					Genero g = gd.getGeneroById(rs.getInt("id_genero"));
-					
+
 					DiskDAO dd = new DiskDAO();
 					Disk d = dd.getDiskById(rs.getInt("id_disco"));
-					
-					result.add(new SongDAO(rs.getInt("id"),
-							rs.getString("nombre"),
-							rs.getTime("duracion"),g,d
-							));
+
+					result.add(new SongDAO(rs.getInt("id"), rs.getString("nombre"), rs.getTime("duracion"), g, d));
 				}
 			} catch (SQLException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-			
+
 		}
 		return result;
 	}
 
+	/**
+	 * Método que guarda una canción en la BD
+	 */
+	@Override
+	public int save() {
+		// TODO Auto-generated method stub
+		int rs = 0;
+		con = Connect.getConnect();
+		if (con != null) {
+			try {
+				PreparedStatement ps = con.prepareStatement(INSERT);
+				ps.setString(1, this.name);
+				ps.setTime(2, this.duration);
+				ps.setInt(3, this.genero.getId());
+				ps.setInt(4, this.disk.getId());
+				rs = ps.executeUpdate();
+
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+
+		}
+		return rs;
+	}
+
+	/**
+	 * Método que edita una canción de la BD
+	 */
+
+	@Override
+	public int edit() {
+		// TODO Auto-generated method stub
+		int rs = 0;
+		con = Connect.getConnect();
+		if (con != null) {
+			try {
+				PreparedStatement ps = con.prepareStatement(UPDATE);
+				ps.setString(1, this.name);
+				ps.setTime(2, this.duration);
+				ps.setInt(3, this.genero.getId());
+				ps.setInt(4, this.disk.getId());
+				ps.setInt(4, this.id);
+				rs = ps.executeUpdate();
+
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+
+		}
+		return rs;
+
+	}
+
+	/**
+	 * Método que borra una canción de la BD
+	 */
+	@Override
+	public int delete() {
+		// TODO Auto-generated method stub
+		int rs = 0;
+		con = Connect.getConnect();
+		if (con != null) {
+			try {
+				PreparedStatement ps = con.prepareStatement(DELETE);
+				ps.setInt(1, this.id);
+				rs = ps.executeUpdate();
+				this.id = -1;
+				this.name = "";
+				this.duration = null;
+				this.genero = null;
+				this.disk = null;
+
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+
+		}
+		return rs;
+
+	}
 
 }

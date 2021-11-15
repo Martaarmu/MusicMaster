@@ -19,100 +19,101 @@ import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
 
 public class TodasListasController {
-	
+
 	@FXML
-    private Button btn_suscribe;
-	 @FXML
-	    private TableView<ListReproductionDAO> tbl_listas;
+	private Button btn_suscribe;
+	@FXML
+	private TableView<ListReproductionDAO> tbl_listas;
 
-	    @FXML
-	    private TableColumn<ListReproductionDAO, String> colId;
+	@FXML
+	private TableColumn<ListReproductionDAO, String> colId;
 
-	    @FXML
-	    private TableColumn<ListReproductionDAO, String> colNombre;
+	@FXML
+	private TableColumn<ListReproductionDAO, String> colNombre;
 
-	    @FXML
-	    private TableColumn<ListReproductionDAO, String> colCreador;
+	@FXML
+	private TableColumn<ListReproductionDAO, String> colCreador;
 
-	    @FXML
-	    private TableView<SongDAO> tbl_canciones;
+	@FXML
+	private TableView<SongDAO> tbl_canciones;
 
-	    @FXML
-	    private TableColumn<SongDAO, String> colCanciones;
-	    
-		private ObservableList<SongDAO> songs;
+	@FXML
+	private TableColumn<SongDAO, String> colCanciones;
+
+	private ObservableList<SongDAO> songs;
 
 	private static UserDAO user;
-    private static ListReproductionDAO list;
-    public static List<ListReproductionDAO> mislistas;
-    
-    /**
+	private static ListReproductionDAO list;
+	public static List<ListReproductionDAO> mislistas;
+
+	/**
 	 * Inicializa la escena
+	 * 
 	 * @param users
 	 */
 	public static void iniAttributtes(UserDAO u) {
-		user=u;
+		user = u;
 	}
-    /**
+
+	/**
 	 * Inicializa la escena
+	 * 
 	 * @param users
 	 */
 	public static void iniAttributtes(UserDAO u, ListReproductionDAO l) {
-		user=u;
-		list=l;
+		user = u;
+		list = l;
 	}
-	
+
 	/**
 	 * Inicializa la escena
 	 */
 	@FXML
 	public void initialize() {
-		
+
 		System.out.println(user);
-	
-		
-		this.colId.setCellValueFactory(list->new SimpleStringProperty(list.getValue().getId()+""));
-		this.colNombre.setCellValueFactory(list->new SimpleStringProperty(list.getValue().getName()));
-		this.colCreador.setCellValueFactory(list->new SimpleStringProperty(list.getValue().getCreator().getId()+""));
-		
-		
-		
+
+		this.colId.setCellValueFactory(list -> new SimpleStringProperty(list.getValue().getId() + ""));
+		this.colNombre.setCellValueFactory(list -> new SimpleStringProperty(list.getValue().getName()));
+		this.colCreador
+				.setCellValueFactory(list -> new SimpleStringProperty(list.getValue().getCreator().getId() + ""));
+
 		this.tbl_listas.setItems(FXCollections.observableList(ListReproductionDAO.showAll()));
 		this.tbl_listas.refresh();
-		
+
 	}
-	
+
 	@FXML
 	private void seleccionar(MouseEvent event) {
-		
+
 		ListReproductionDAO l = (ListReproductionDAO) this.tbl_listas.getSelectionModel().getSelectedItem();
 		songs = FXCollections.observableArrayList();
 		this.tbl_canciones.setItems(FXCollections.observableList(l.getsongsbyid(l.getId())));
-		this.colCanciones.setCellValueFactory(list->new SimpleStringProperty(list.getValue().getId()+""));
-		//this.colCancion.setCellValueFactory(new PropertyValueFactory("name"));
-		
+		this.colCanciones.setCellValueFactory(list -> new SimpleStringProperty(list.getValue().getId() + ""));
+
 		ObservableList<SongDAO> items = FXCollections.observableList(l.getsongsbyid(l.getId()));
 		this.tbl_canciones.setItems(items);
-		
+
 	}
+
+	
+	///////////PONER ALERT Y PROBARLO
 	@FXML
 	private void suscribirse(ActionEvent event) {
-		
+
 		ListReproductionDAO l = (ListReproductionDAO) this.tbl_listas.getSelectionModel().getSelectedItem();
 		System.out.println(l);
-    	user.suscribe(user, l);
-    	
-    	Alert alert = new Alert(Alert.AlertType.INFORMATION);
+		user.suscribe(user, l);
+
+		Alert alert = new Alert(Alert.AlertType.INFORMATION);
 		alert.setHeaderText(null);
 		alert.setTitle("Info");
 		alert.setContentText("Suscrito con éxito");
 		alert.showAndWait();
-    	
-    	Stage stage = (Stage) this.btn_suscribe.getScene().getWindow();
+
+		Stage stage = (Stage) this.btn_suscribe.getScene().getWindow();
 		stage.close();
-		
-		
+
 	}
-	
-	
+
 }

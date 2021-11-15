@@ -67,38 +67,42 @@ public class ListReproductionDAO extends ListReproduction implements ListDAO {
 
 	private static Connection con = null;
 
+	/**
+	 * Método que guarda una playlist en la BD
+	 */
 	@Override
-	public void save() {
+	public int save() {
 		// TODO Auto-generated method stub
+		int rs=0;
 		con = Connect.getConnect();
 		if (con != null) {
 			PreparedStatement ps = null;
-			ResultSet rs = null;
-
 			try {
 				
-				ps = con.prepareStatement(INSERT, Statement.RETURN_GENERATED_KEYS);
+				ps = con.prepareStatement(INSERT);
 				ps.setString(1, this.name);
 				ps.setInt(2, this.creator.getId());
-				ps.executeUpdate();
-				rs = ps.getGeneratedKeys();
+				rs = ps.executeUpdate();
+				//rs = ps.getGeneratedKeys();
 				
 			} catch (SQLException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 
-		}
-
+		}//, Statement.RETURN_GENERATED_KEYS
+		
+		return rs;
 	}
 
 	@Override
 	public int edit() {
-		return id;
-		// TODO Auto-generated method stub
-
+		return 0;
 	}
 
+	/**
+	 * Método que borra una playlist de la BD
+	 */
 	@Override
 	public int delete() {
 		// TODO Auto-generated method stub
@@ -242,7 +246,9 @@ public static List<ListReproductionDAO> showbysuscripcion(UserDAO u) {
 
 	
 	
-
+/**
+ * Método que añade una cancion a la playlist
+ */
 	@Override
 	public int addSong(SongDAO s, ListReproductionDAO l) {
 		int rs = 0;
@@ -263,6 +269,9 @@ public static List<ListReproductionDAO> showbysuscripcion(UserDAO u) {
 
 	}
 
+	/**
+	 * Método que borra una canción de una playlist
+	 */
 	@Override
 	public int removeSong(SongDAO s,ListReproductionDAO l) {
 		// TODO Auto-generated method stub
