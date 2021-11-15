@@ -7,6 +7,7 @@ public class ListReproduction {
 	protected int id;
 	protected String name;
 	protected User creator;
+	protected int nReproduccion;
 	protected List<Song> songs;
 	protected List<User> users;
 	
@@ -15,6 +16,12 @@ public class ListReproduction {
 	public ListReproduction() {
 		super();
 	}
+	
+	public ListReproduction(int id) {
+		super();
+		this.id = id;
+	}
+
 	public ListReproduction(String name,User u) {
 		this.name=name;
 		this.creator=u;
@@ -47,11 +54,12 @@ public class ListReproduction {
 		this.name = name;
 		
 	}
-	public ListReproduction(int id, String name,User u) {
+	public ListReproduction(int id, String name,User u, int nReproduccion) {
 		super();
 		this.id = id;
 		this.name = name;
 		this.creator=u;
+		this.nReproduccion=nReproduccion;
 	}
 	
 	
@@ -90,6 +98,13 @@ public class ListReproduction {
 	public void setUsers(List<User> users) {
 		this.users = users;
 	}
+	
+	public int getnReproduccion() {
+		return nReproduccion;
+	}
+	public void setnReproduccion(int nReproduccion) {
+		this.nReproduccion = nReproduccion;
+	}
 	@Override
 	public int hashCode() {
 		final int prime = 31;
@@ -112,7 +127,7 @@ public class ListReproduction {
 	}
 	@Override
 	public String toString() {
-		return "ListReproduction [id=" + id + ", name=" + name + ", creator=" + creator.getName() + ", songs=" + songs + "]";
+		return "ListReproduction [id=" + id + ", name=" + name + ", creator=" + creator.getName() + ", nReproduciones=" + nReproduccion + "]";
 	}
 	
 	

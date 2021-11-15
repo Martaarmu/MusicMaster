@@ -30,11 +30,6 @@ public class SongDAO extends Song implements IDAO<Song> {
 		// TODO Auto-generated constructor stub
 	}
 
-	public SongDAO(String name, Time duration, Genero genero, int nReproducciones, Disk disk) {
-		super(name, duration, genero, nReproducciones, disk);
-		// TODO Auto-generated constructor stub
-	}
-
 	public SongDAO() {
 		// TODO Auto-generated constructor stub
 	}
@@ -45,8 +40,9 @@ public class SongDAO extends Song implements IDAO<Song> {
 	 * Método que muestra todas las canciones de una lista
 	 * 
 	 * @return
+	 * @throws DAOExcepcion 
 	 */
-	public static List<SongDAO> showAll() {
+	public static List<SongDAO> showAll() throws DAOExcepcion {
 		List<SongDAO> result = new ArrayList<>();
 		con = Connect.getConnect();
 		if (con != null) {
@@ -69,7 +65,8 @@ public class SongDAO extends Song implements IDAO<Song> {
 				}
 			} catch (SQLException e) {
 				// TODO Auto-generated catch block
-				e.printStackTrace();
+				throw new DAOExcepcion(e);
+				//e.printStackTrace();
 			}
 
 		}
@@ -78,9 +75,10 @@ public class SongDAO extends Song implements IDAO<Song> {
 
 	/**
 	 * Método que guarda una canción en la BD
+	 * @throws DAOExcepcion 
 	 */
 	@Override
-	public int save() {
+	public int save() throws DAOExcepcion {
 		// TODO Auto-generated method stub
 		int rs = 0;
 		con = Connect.getConnect();
@@ -95,7 +93,8 @@ public class SongDAO extends Song implements IDAO<Song> {
 
 			} catch (SQLException e) {
 				// TODO Auto-generated catch block
-				e.printStackTrace();
+				//e.printStackTrace();
+				throw new DAOExcepcion(e);
 			}
 
 		}
@@ -104,10 +103,11 @@ public class SongDAO extends Song implements IDAO<Song> {
 
 	/**
 	 * Método que edita una canción de la BD
+	 * @throws DAOExcepcion 
 	 */
 
 	@Override
-	public int edit() {
+	public int edit() throws DAOExcepcion {
 		// TODO Auto-generated method stub
 		int rs = 0;
 		con = Connect.getConnect();
@@ -123,7 +123,8 @@ public class SongDAO extends Song implements IDAO<Song> {
 
 			} catch (SQLException e) {
 				// TODO Auto-generated catch block
-				e.printStackTrace();
+				//e.printStackTrace();
+				throw new DAOExcepcion(e);
 			}
 
 		}
@@ -133,9 +134,10 @@ public class SongDAO extends Song implements IDAO<Song> {
 
 	/**
 	 * Método que borra una canción de la BD
+	 * @throws DAOExcepcion 
 	 */
 	@Override
-	public int delete() {
+	public int delete() throws DAOExcepcion {
 		// TODO Auto-generated method stub
 		int rs = 0;
 		con = Connect.getConnect();
@@ -152,7 +154,8 @@ public class SongDAO extends Song implements IDAO<Song> {
 
 			} catch (SQLException e) {
 				// TODO Auto-generated catch block
-				e.printStackTrace();
+				//e.printStackTrace();
+				throw new DAOExcepcion(e);
 			}
 
 		}

@@ -2,6 +2,7 @@ package com.martaarjona.musicMaster;
 
 import java.util.List;
 
+import com.martaarjona.MariaDB.DAOExcepcion;
 import com.martaarjona.MariaDB.ListReproductionDAO;
 import com.martaarjona.MariaDB.UserDAO;
 
@@ -42,10 +43,11 @@ public class EditarUserController {
 	}
 	/**
 	 * Inicializa la escena
+	 * @throws DAOExcepcion 
 	 */
 
 	@FXML
-	public void initialize() {
+	public void initialize() throws DAOExcepcion {
 		this.users = FXCollections.observableList(u.getUsers());
 		System.out.println(u);
 		System.out.println(users);
@@ -59,9 +61,10 @@ public class EditarUserController {
 	 * Método para actualizar el usuario
 	 * 
 	 * @param event
+	 * @throws DAOExcepcion 
 	 */
 	@FXML
-	void editUser(ActionEvent event) {
+	void editUser(ActionEvent event) throws DAOExcepcion {
 
 		if (this.u != null) {
 			this.u.setName(this.txtNombre.getText());

@@ -7,11 +7,12 @@
 
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.martaarjona.musicMaster.TodasListasController">
    <children>
-      <TableView fx:id="tbl_listas" layoutX="45.0" layoutY="87.0" onMouseClicked="#seleccionar" prefHeight="200.0" prefWidth="229.0">
+      <TableView fx:id="tbl_listas" layoutX="45.0" layoutY="87.0" onMouseClicked="#seleccionar" prefHeight="200.0" prefWidth="301.0">
         <columns>
           <TableColumn fx:id="colId" prefWidth="75.0" text="id" />
           <TableColumn fx:id="colNombre" prefWidth="75.0" text="Nombre" />
             <TableColumn fx:id="colCreador" prefWidth="75.0" text="Creador" />
+            <TableColumn fx:id="colnReproduccion" prefWidth="75.0" text="nReproduccion" />
         </columns>
       </TableView>
       <TableView fx:id="tbl_canciones" layoutX="357.0" layoutY="87.0" prefHeight="200.0" prefWidth="200.0">

@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.martaarjona.MariaDB.DAOExcepcion;
 import com.martaarjona.MariaDB.ListReproductionDAO;
 import com.martaarjona.MariaDB.UserDAO;
 
@@ -41,9 +42,10 @@ public class LoginController {
 	 * Método para iniciar sesión
 	 * 
 	 * @param event
+	 * @throws DAOExcepcion 
 	 */
 	@FXML
-	void inicio(ActionEvent event) {
+	void inicio(ActionEvent event) throws DAOExcepcion {
 
 		this.users = FXCollections.observableList(user.getUsers());
 

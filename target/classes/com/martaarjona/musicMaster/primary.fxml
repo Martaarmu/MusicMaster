@@ -12,11 +12,12 @@
 
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.martaarjona.musicMaster.PrimaryController">
    <children>
-      <TableView fx:id="tblListas" layoutX="36.0" layoutY="69.0" onMouseClicked="#seleccionar" prefHeight="117.0" prefWidth="227.0">
+      <TableView fx:id="tblListas" layoutX="36.0" layoutY="69.0" onMouseClicked="#seleccionar" prefHeight="117.0" prefWidth="256.0">
         <columns>
-          <TableColumn fx:id="colId" prefWidth="44.0" text="Id" />
-          <TableColumn fx:id="colNombre" prefWidth="114.00003051757812" text="Nombre" />
-            <TableColumn fx:id="colCreador" prefWidth="67.99993896484375" text="Creador" />
+          <TableColumn fx:id="colId" prefWidth="29.33334732055664" text="Id" />
+          <TableColumn fx:id="colNombre" prefWidth="97.33336639404297" text="Nombre" />
+            <TableColumn fx:id="colCreador" prefWidth="57.33331298828125" text="Creador" />
+            <TableColumn fx:id="col_nReprod" prefWidth="75.0" text="nReprod" />
         </columns>
       </TableView>
       <Label layoutX="260.0" layoutY="21.0" prefHeight="32.0" prefWidth="123.0" text="MUSIC MASTER">
@@ -24,31 +25,33 @@
             <Font name="System Bold Italic" size="16.0" />
          </font></Label>
       <Button fx:id="btnAdd" layoutX="446.0" layoutY="209.0" mnemonicParsing="false" onAction="#addSong" prefHeight="25.0" prefWidth="132.0" text="Añadir canción" />
-      <TableView fx:id="tblCanciones" layoutX="276.0" layoutY="69.0" prefHeight="268.0" prefWidth="151.0">
+      <TableView fx:id="tblCanciones" layoutX="315.0" layoutY="67.0" prefHeight="268.0" prefWidth="117.0">
         <columns>
-          <TableColumn fx:id="colCancion" prefWidth="149.3333740234375" text="CANCIONES" />
+          <TableColumn fx:id="colCancion" prefWidth="115.99998982747395" text="CANCIONES" />
         </columns>
       </TableView>
       <Hyperlink fx:id="btn_borrar" layoutX="14.0" layoutY="374.0" onAction="#deleteUser" text="Eliminar cuenta" />
       <Button fx:id="btnBorrar" layoutX="446.0" layoutY="243.0" mnemonicParsing="false" onAction="#deleteSong" prefHeight="25.0" prefWidth="132.0" text="Eliminar canción" />
       <Button fx:id="btn_addList" layoutX="446.0" layoutY="69.0" mnemonicParsing="false" onAction="#addList" prefHeight="25.0" prefWidth="132.0" text="Crear lista" />
       <Hyperlink fx:id="btn_editarUser" layoutX="126.0" layoutY="374.0" onAction="#editUser" text="Editar cuenta" />
-      <ImageView fitHeight="32.0" fitWidth="37.0" layoutX="223.0" layoutY="21.0" pickOnBounds="true" preserveRatio="true">
-         <image>
-            <Image url="@icono.png" />
-         </image>
-      </ImageView>
       <Button fx:id="btn_todas" layoutX="446.0" layoutY="143.0" mnemonicParsing="false" onAction="#vertodas" prefHeight="25.0" prefWidth="132.0" text="Ver todas" />
       <Button fx:id="btn_borrarlista" layoutX="446.0" layoutY="107.0" mnemonicParsing="false" onAction="#deleteLista" prefHeight="25.0" prefWidth="132.0" text="Borrar lista" />
       <Button fx:id="btn_actualizar" layoutX="78.0" layoutY="337.0" mnemonicParsing="false" onAction="#actualizar" prefHeight="25.0" prefWidth="143.0" text="Actualizar" />
-      <TableView fx:id="tblSuscripciones" layoutX="36.0" layoutY="201.0" onMouseClicked="#seleccionar1" prefHeight="133.0" prefWidth="227.0">
+      <TableView fx:id="tblSuscripciones" layoutX="36.0" layoutY="201.0" onMouseClicked="#seleccionar1" prefHeight="133.0" prefWidth="256.0">
         <columns>
-          <TableColumn fx:id="colId_suscripcion" prefWidth="75.0" text="Id" />
-          <TableColumn fx:id="colNombre_suscripcion" prefWidth="75.0" text="Nombre" />
-            <TableColumn fx:id="colCreador_suscripcion" prefWidth="75.0" text="Creador" />
+          <TableColumn fx:id="colId_suscripcion" prefWidth="30.66666030883789" text="Id" />
+          <TableColumn fx:id="colNombre_suscripcion" prefWidth="93.99996185302734" text="Nombre" />
+            <TableColumn fx:id="colCreador_suscripcion" prefWidth="56.6666259765625" text="Creador" />
+            <TableColumn fx:id="col_nReprod_suscripcion" prefWidth="73.33335876464844" text="nReprod" />
         </columns>
       </TableView>
       <Label layoutX="36.0" layoutY="53.0" text="Mis listas:" />
       <Button fx:id="btn_des_suscribe" layoutX="446.0" layoutY="294.0" mnemonicParsing="false" onAction="#dessubcribe" prefHeight="25.0" prefWidth="132.0" text="Dejar de seguir" />
+      <ImageView fitHeight="32.0" fitWidth="36.0" layoutX="221.0" layoutY="21.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@icono1.png" />
+         </image>
+      </ImageView>
+      <Button fx:id="btn_reproducir" layoutX="286.0" layoutY="349.0" mnemonicParsing="false" onAction="#reproducir" prefHeight="25.0" prefWidth="132.0" text="Reproducir" />
    </children>
 </AnchorPane>

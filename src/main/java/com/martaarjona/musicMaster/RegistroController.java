@@ -2,6 +2,7 @@ package com.martaarjona.musicMaster;
 
 import java.util.List;
 
+import com.martaarjona.MariaDB.DAOExcepcion;
 import com.martaarjona.MariaDB.UserDAO;
 
 import javafx.collections.FXCollections;
@@ -57,9 +58,10 @@ public class RegistroController {
 	 * Inserta o modifica en la BD un usuario
 	 * 
 	 * @param event
+	 * @throws DAOExcepcion 
 	 */
 	@FXML
-	void addUser(ActionEvent event) {
+	void addUser(ActionEvent event) throws DAOExcepcion {
 
 		String nombre = this.txt_nombre.getText();
 		String correo = this.txt_correo.getText();

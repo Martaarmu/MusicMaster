@@ -3,6 +3,7 @@ package com.martaarjona.musicMaster;
 import java.io.IOException;
 import java.sql.Time;
 
+import com.martaarjona.MariaDB.DAOExcepcion;
 import com.martaarjona.MariaDB.DiskDAO;
 import com.martaarjona.MariaDB.ListReproductionDAO;
 import com.martaarjona.MariaDB.SongDAO;
@@ -66,15 +67,13 @@ public class SecondaryController {
 	}
 
 	@FXML
-	public void initialize() {
+	public void initialize() throws DAOExcepcion {
 		System.out.println(user);
 		System.out.println(list);
 
 		this.colId.setCellValueFactory(list -> new SimpleStringProperty(list.getValue().getId() + ""));
 		this.colNombre.setCellValueFactory(list -> new SimpleStringProperty(list.getValue().getName()));
 		this.colDuracion.setCellValueFactory(list -> new SimpleStringProperty(list.getValue().getDuration() + ""));
-		// this.colGenero.setCellValueFactory(list->new
-		// SimpleStringProperty(list.getValue().getId()+""));
 		this.colGenero.setCellValueFactory(new PropertyValueFactory("genero"));
 		this.colDisco.setCellValueFactory(list -> new SimpleStringProperty(list.getValue().getId() + ""));
 
@@ -82,16 +81,8 @@ public class SecondaryController {
 		this.tblCanciones.refresh();
 	}
 
-	//////// MIARA EN FXML PORQUE CREOO QUE NO EXISTE!!
 	@FXML
-	private void seleccionar(MouseEvent event) {
-		DiskDAO dd = new DiskDAO();
-		Song s = this.tblCanciones.getSelectionModel().getSelectedItem();
-
-	}
-
-	@FXML
-	void addSong(ActionEvent event) {
+	void addSong(ActionEvent event) throws DAOExcepcion {
 		SongDAO s = (SongDAO) this.tblCanciones.getSelectionModel().getSelectedItem();
 		
 		if(s==null) {

@@ -1,5 +1,6 @@
 package com.martaarjona.musicMaster;
 
+import com.martaarjona.MariaDB.DAOExcepcion;
 import com.martaarjona.MariaDB.ListReproductionDAO;
 import com.martaarjona.MariaDB.UserDAO;
 
@@ -33,9 +34,10 @@ public class ListaController {
 	 * Método para crear una nueva playlist
 	 * 
 	 * @param event
+	 * @throws DAOExcepcion 
 	 */
 	@FXML
-	void addLista(ActionEvent event) {
+	void addLista(ActionEvent event) throws DAOExcepcion {
 
 		ListReproductionDAO l = new ListReproductionDAO();
 		l.setName(this.txt_name.getText());

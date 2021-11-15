@@ -46,7 +46,6 @@ public class Connect {
 
 	/**
 	 * Guarda en un XML los datos de una conexion
-	 * 
 	 * @param c
 	 */
 	public static void save(Conexion c) {
@@ -66,8 +65,6 @@ public class Connect {
 
 	/**
 	 * Carga los datos de un XML
-	 * 
-	 * @return
 	 */
 	public static Conexion load() {
 		Conexion con = new Conexion();

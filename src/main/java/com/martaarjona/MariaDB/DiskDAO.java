@@ -38,8 +38,9 @@ public class DiskDAO extends Disk implements IDAO<Disk>{
 	 * Método que trae un disco por su id
 	 * @param id
 	 * @return
+	 * @throws DAOExcepcion 
 	 */
-	public Disk getDiskById(int id) {
+	public Disk getDiskById(int id) throws DAOExcepcion {
 		Disk d = new DiskDAO();
 		con=Connect.getConnect();
 		
@@ -61,7 +62,8 @@ public class DiskDAO extends Disk implements IDAO<Disk>{
 				}
 			} catch (SQLException e) {
 				// TODO Auto-generated catch block
-				e.printStackTrace();
+				//e.printStackTrace();
+				throw new DAOExcepcion(e);
 			}
 		}
 		return d;
@@ -75,9 +77,10 @@ public class DiskDAO extends Disk implements IDAO<Disk>{
 	
 	/**
 	 * Método que permite guardar un disco en la BD
+	 * @throws DAOExcepcion 
 	 */
 	@Override
-	public int save() {
+	public int save() throws DAOExcepcion {
 		// TODO Auto-generated method stub
 		int rs=0;
 		con = Connect.getConnect();
@@ -89,7 +92,8 @@ public class DiskDAO extends Disk implements IDAO<Disk>{
 				ps.setInt(3, this.artist.getId());
 			} catch (SQLException e) {
 				// TODO Auto-generated catch block
-				e.printStackTrace();
+				//e.printStackTrace();
+				throw new DAOExcepcion(e);
 			}
 			
 		}
@@ -98,9 +102,10 @@ public class DiskDAO extends Disk implements IDAO<Disk>{
 	
 	/**
 	 * Método que permite editar un disco de la BD
+	 * @throws DAOExcepcion 
 	 */
 	@Override
-	public int edit() {
+	public int edit() throws DAOExcepcion {
 		// TODO Auto-generated method stub
 		int rs=0;
 		con = Connect.getConnect();
@@ -113,7 +118,8 @@ public class DiskDAO extends Disk implements IDAO<Disk>{
 				ps.setInt(4, this.id);
 			} catch (SQLException e) {
 				// TODO Auto-generated catch block
-				e.printStackTrace();
+				//e.printStackTrace();
+				throw new DAOExcepcion(e);
 			}
 			
 		}
@@ -122,9 +128,10 @@ public class DiskDAO extends Disk implements IDAO<Disk>{
 	
 	/**
 	 * Método que permite borrar un disco de la BD
+	 * @throws DAOExcepcion 
 	 */
 	@Override
-	public int delete() {
+	public int delete() throws DAOExcepcion {
 		// TODO Auto-generated method stub
 		int rs = 0;
 		con = Connect.getConnect();
@@ -140,7 +147,8 @@ public class DiskDAO extends Disk implements IDAO<Disk>{
 				
 			} catch (SQLException e) {
 				// TODO Auto-generated catch block
-				e.printStackTrace();
+				throw new DAOExcepcion(e);
+				//e.printStackTrace();
 			}
 		}
 		return rs;

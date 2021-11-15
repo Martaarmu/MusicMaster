@@ -32,9 +32,10 @@ public class ArtistDAO extends Artist implements IDAO<Artist>{
 	 * Método que trae un artista de la BD por su id
 	 * @param id
 	 * @return
+	 * @throws DAOExcepcion 
 	 */
 	
-	public Artist getArtistById(int id) {
+	public Artist getArtistById(int id) throws DAOExcepcion {
 		Artist a = new ArtistDAO();
 		con=Connect.getConnect();
 		
@@ -53,7 +54,8 @@ public class ArtistDAO extends Artist implements IDAO<Artist>{
 				}
 			} catch (SQLException e) {
 				// TODO Auto-generated catch block
-				e.printStackTrace();
+				throw new DAOExcepcion(e);
+				//e.printStackTrace();
 			}
 	
 		}
@@ -67,9 +69,10 @@ public class ArtistDAO extends Artist implements IDAO<Artist>{
 	
 	/**
 	 * Método que permite insertar un artista en la BD
+	 * @throws DAOExcepcion 
 	 */
 	@Override
-	public int save() {
+	public int save() throws DAOExcepcion {
 		// TODO Auto-generated method stub
 		int rs=0;
 		con = Connect.getConnect();
@@ -83,7 +86,8 @@ public class ArtistDAO extends Artist implements IDAO<Artist>{
 				
 			} catch (SQLException e) {
 				// TODO Auto-generated catch block
-				e.printStackTrace();
+				throw new DAOExcepcion(e);
+				//e.printStackTrace();
 			}
 			
 			
@@ -93,9 +97,10 @@ public class ArtistDAO extends Artist implements IDAO<Artist>{
 	
 	/**
 	 * Método que permite editar un artista de la BD
+	 * @throws DAOExcepcion 
 	 */
 	@Override
-	public int edit() {
+	public int edit() throws DAOExcepcion {
 		// TODO Auto-generated method stub
 		int rs=0;
 		con = Connect.getConnect();
@@ -110,7 +115,8 @@ public class ArtistDAO extends Artist implements IDAO<Artist>{
 				
 			} catch (SQLException e) {
 				// TODO Auto-generated catch block
-				e.printStackTrace();
+				throw new DAOExcepcion(e);
+				//e.printStackTrace();
 			}
 			
 			
@@ -120,9 +126,10 @@ public class ArtistDAO extends Artist implements IDAO<Artist>{
 	
 	/**
 	 * Método que permite borrar un artista de la BD
+	 * @throws DAOExcepcion 
 	 */
 	@Override
-	public int delete() {
+	public int delete() throws DAOExcepcion {
 		// TODO Auto-generated method stub
 		int rs = 0;
 		con = Connect.getConnect();
@@ -137,7 +144,8 @@ public class ArtistDAO extends Artist implements IDAO<Artist>{
 				this.photo="";
 			} catch (SQLException e) {
 				// TODO Auto-generated catch block
-				e.printStackTrace();
+				//e.printStackTrace();
+				throw new DAOExcepcion(e);
 			}
 		}
 		return rs;

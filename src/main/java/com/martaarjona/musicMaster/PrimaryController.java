@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.Optional;
 import java.util.ResourceBundle;
 
+import com.martaarjona.MariaDB.DAOExcepcion;
 import com.martaarjona.MariaDB.ListReproductionDAO;
 import com.martaarjona.MariaDB.SongDAO;
 import com.martaarjona.MariaDB.UserDAO;
@@ -52,6 +53,8 @@ public class PrimaryController {
 	@FXML
 	private Button btn_des_suscribe;
 	@FXML
+	private Button btn_reproducir;
+	@FXML
 	private TableView<ListReproductionDAO> tblListas;
 	@FXML
 	private TableView<SongDAO> tblCanciones;
@@ -64,6 +67,9 @@ public class PrimaryController {
 	private TableColumn<ListReproduction, String> colCreador;
 	@FXML
 	private TableColumn<Song, String> colCancion;
+	@FXML
+	private TableColumn<ListReproduction, String> col_nReprod;
+	
 	@FXML
 	private Hyperlink btn_borrar;
 	@FXML
@@ -80,6 +86,8 @@ public class PrimaryController {
 
 	@FXML
 	private TableColumn<ListReproductionDAO, String> colCreador_suscripcion;
+	@FXML
+	private TableColumn<ListReproduction, String> col_nReprod_suscripcion;
 
 	private ObservableList<ListReproductionDAO> lists;
 	private ObservableList<SongDAO> songs;
@@ -117,25 +125,23 @@ public class PrimaryController {
 
 	/**
 	 * Inicializa la escena
+	 * @throws DAOExcepcion 
 	 */
 	@FXML
-	public void initialize() {
+	public void initialize() throws DAOExcepcion {
 		this.users = FXCollections.observableList(user.getUsers());
-		System.out.println(user);
-		System.out.println(users);
 
 		this.colId.setCellValueFactory(list -> new SimpleStringProperty(list.getValue().getId() + ""));
 		this.colNombre.setCellValueFactory(list -> new SimpleStringProperty(list.getValue().getName()));
-		this.colCreador
-				.setCellValueFactory(list -> new SimpleStringProperty(list.getValue().getCreator().getId() + ""));
-
-		// this.tblListas.setItems(FXCollections.observableList(ListReproductionDAO.showAll()));
+		this.colCreador.setCellValueFactory(list -> new SimpleStringProperty(list.getValue().getCreator().getId() + ""));
+		this.col_nReprod.setCellValueFactory(list -> new SimpleStringProperty(list.getValue().getnReproduccion() + ""));
 		this.tblListas.setItems(FXCollections.observableList(ListReproductionDAO.showbyuser(user)));
 
 		this.colId_suscripcion.setCellValueFactory(list -> new SimpleStringProperty(list.getValue().getId() + ""));
 		this.colNombre_suscripcion.setCellValueFactory(list -> new SimpleStringProperty(list.getValue().getName()));
 		this.colCreador_suscripcion
 				.setCellValueFactory(list -> new SimpleStringProperty(list.getValue().getCreator().getId() + ""));
+		this.col_nReprod_suscripcion.setCellValueFactory(list -> new SimpleStringProperty(list.getValue().getnReproduccion() + ""));
 
 		this.tblSuscripciones.setItems(FXCollections.observableList(ListReproductionDAO.showbysuscripcion(user)));
 
@@ -145,7 +151,7 @@ public class PrimaryController {
 	}
 
 	@FXML
-	private void deleteUser(ActionEvent event) {
+	private void deleteUser(ActionEvent event) throws DAOExcepcion {
 
 		if (this.user == null) {
 			Alert alert = new Alert(Alert.AlertType.ERROR);
@@ -205,7 +211,7 @@ public class PrimaryController {
 	}
 
 	@FXML
-	private void seleccionar(MouseEvent event) {
+	private void seleccionar(MouseEvent event) throws DAOExcepcion {
 
 		ListReproductionDAO l = (ListReproductionDAO) this.tblListas.getSelectionModel().getSelectedItem();
 		songs = FXCollections.observableArrayList();
@@ -218,7 +224,7 @@ public class PrimaryController {
 	}
 
 	@FXML
-	private void seleccionar1(MouseEvent event) {
+	private void seleccionar1(MouseEvent event) throws DAOExcepcion {
 
 		ListReproductionDAO l1 = (ListReproductionDAO) this.tblSuscripciones.getSelectionModel().getSelectedItem();
 		songs = FXCollections.observableArrayList();
@@ -252,7 +258,7 @@ public class PrimaryController {
 	}
 
 	@FXML
-	void deleteLista(ActionEvent event) {
+	void deleteLista(ActionEvent event) throws DAOExcepcion {
 
 		list = (ListReproductionDAO) this.tblListas.getSelectionModel().getSelectedItem();
 
@@ -304,7 +310,7 @@ public class PrimaryController {
 	}
 
 	@FXML
-	void deleteSong(ActionEvent event) {
+	void deleteSong(ActionEvent event) throws DAOExcepcion {
 
 		list = (ListReproductionDAO) this.tblListas.getSelectionModel().getSelectedItem();
 		SongDAO s = (SongDAO) this.tblCanciones.getSelectionModel().getSelectedItem();
@@ -327,11 +333,12 @@ public class PrimaryController {
 	}
 
 	@FXML
-	void actualizar(ActionEvent event) {
+	void actualizar(ActionEvent event) throws DAOExcepcion {
 		this.tblListas.setItems(FXCollections.observableList(ListReproductionDAO.showbyuser(user)));
 		this.tblListas.refresh();
 
 		this.tblSuscripciones.setItems(FXCollections.observableList(ListReproductionDAO.showbysuscripcion(user)));
+		this.tblSuscripciones.refresh();
 	}
 
 	@FXML
@@ -354,7 +361,7 @@ public class PrimaryController {
 	}
 
 	@FXML
-	void dessubcribe(ActionEvent event) {
+	void dessubcribe(ActionEvent event) throws DAOExcepcion {
 
 		list = (ListReproductionDAO) this.tblSuscripciones.getSelectionModel().getSelectedItem();
 
@@ -374,6 +381,41 @@ public class PrimaryController {
 			alert.showAndWait();
 		}
 
+	}
+	
+	@FXML
+	void reproducir(ActionEvent event) throws DAOExcepcion {
+		if((ListReproductionDAO) this.tblListas.getSelectionModel().getSelectedItem()!=null) {
+			list=this.tblListas.getSelectionModel().getSelectedItem();
+			int nrepBD= nRep(list.getId());
+	        nrepBD++;
+	        list.reproducir(nrepBD, list);
+		}else if((ListReproductionDAO) this.tblSuscripciones.getSelectionModel().getSelectedItem()!=null){
+			list=this.tblSuscripciones.getSelectionModel().getSelectedItem();
+			int nrepBD= nRep(list.getId());
+	        nrepBD++;
+	        list.reproducir(nrepBD, list);
+		}else {
+			Alert alert = new Alert(Alert.AlertType.ERROR);
+			alert.setHeaderText(null);
+			alert.setTitle("Error");
+			alert.setContentText("Debes seleccionar una lista");
+			alert.showAndWait();
+		}
+		
+		
+		
+	//	list = ;
+			
+	
+	}
+	
+	private int nRep(int id) throws DAOExcepcion {
+		int result;
+		ListReproductionDAO l = ListReproductionDAO.showbyid(id);
+		result=l.getnReproduccion();
+		System.out.println(result);
+		return result;
 	}
 
 }

@@ -28,8 +28,9 @@ public class GeneroDAO extends Genero implements IDAO<Genero>{
 	 * Método que trae un genero por su id
 	 * @param id
 	 * @return
+	 * @throws DAOExcepcion 
 	 */
-	public Genero getGeneroById(int id) {
+	public Genero getGeneroById(int id) throws DAOExcepcion {
 		Genero g = new GeneroDAO();
 		con=Connect.getConnect();
 		
@@ -46,23 +47,21 @@ public class GeneroDAO extends Genero implements IDAO<Genero>{
 				}
 			} catch (SQLException e) {
 				// TODO Auto-generated catch block
-				e.printStackTrace();
+				//e.printStackTrace();
+				throw new DAOExcepcion(e);
 			}
 	
 		}
 		return g;
 	}
 	
-	public List<Genero> showAll(){
-		List<Genero> result = new ArrayList<>();
-		return result;
-	}
 	
 	/**
 	 * Método que inserta un genero en la BD
+	 * @throws DAOExcepcion 
 	 */
 	@Override
-	public int save() {
+	public int save() throws DAOExcepcion {
 		// TODO Auto-generated method stub
 		int rs=0;
 		if(con!=null) {
@@ -73,7 +72,8 @@ public class GeneroDAO extends Genero implements IDAO<Genero>{
 				
 			} catch (SQLException e) {
 				// TODO Auto-generated catch block
-				e.printStackTrace();
+				//e.printStackTrace();
+				throw new DAOExcepcion(e);
 			}
 			
 			
@@ -83,9 +83,10 @@ public class GeneroDAO extends Genero implements IDAO<Genero>{
 	
 	/**
 	 * Método que edita un genero de la BD
+	 * @throws DAOExcepcion 
 	 */
 	@Override
-	public int edit() {
+	public int edit() throws DAOExcepcion {
 		// TODO Auto-generated method stub
 		int rs=0;
 		if(con!=null) {
@@ -97,7 +98,8 @@ public class GeneroDAO extends Genero implements IDAO<Genero>{
 				
 			} catch (SQLException e) {
 				// TODO Auto-generated catch block
-				e.printStackTrace();
+				//e.printStackTrace();
+				throw new DAOExcepcion(e);
 			}
 			
 			
@@ -107,9 +109,10 @@ public class GeneroDAO extends Genero implements IDAO<Genero>{
 	
 	/**
 	 * Método que borra un genero de la BD
+	 * @throws DAOExcepcion 
 	 */
 	@Override
-	public int delete() {
+	public int delete() throws DAOExcepcion {
 		// TODO Auto-generated method stub
 		int rs=0;
 		if(con!=null) {
@@ -122,7 +125,8 @@ public class GeneroDAO extends Genero implements IDAO<Genero>{
 				
 			} catch (SQLException e) {
 				// TODO Auto-generated catch block
-				e.printStackTrace();
+				//e.printStackTrace();
+				throw new DAOExcepcion(e);
 			}
 			
 			

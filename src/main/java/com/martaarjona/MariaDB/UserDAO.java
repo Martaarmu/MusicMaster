@@ -53,8 +53,9 @@ public class UserDAO extends User implements IDAO<User>{
 	 * Método que obtiene un usuario mediante su id
 	 * @param id
 	 * @return User
+	 * @throws DAOExcepcion 
 	 */
-	public User getUserById(int id) {
+	public User getUserById(int id) throws DAOExcepcion {
 		
 		User u = new UserDAO();
 		
@@ -74,7 +75,8 @@ public class UserDAO extends User implements IDAO<User>{
 				}
 			} catch (SQLException e) {
 				// TODO Auto-generated catch block
-				e.printStackTrace();
+				//e.printStackTrace();
+				throw new DAOExcepcion(e);
 			}
 	
 		}
@@ -88,8 +90,9 @@ public class UserDAO extends User implements IDAO<User>{
 	 * Obtiene todos los usuarios guardados en la BD
 	 * 
 	 * @return lista de usuarios
+	 * @throws DAOExcepcion 
 	 */
-	public List<UserDAO> getUsers(){
+	public List<UserDAO> getUsers() throws DAOExcepcion{
 		List<UserDAO> users = new ArrayList<>();
 		con = Connect.getConnect();
 		
@@ -111,7 +114,8 @@ public class UserDAO extends User implements IDAO<User>{
 
 			} catch (SQLException e) {
 				// TODO Auto-generated catch block
-				e.printStackTrace();
+				//e.printStackTrace();
+				throw new DAOExcepcion(e);
 			}
 
 		}
@@ -124,8 +128,9 @@ public class UserDAO extends User implements IDAO<User>{
 	 * con un nombre y una contraseña dados
 	 * @param u
 	 * @return
+	 * @throws DAOExcepcion 
 	 */
-	public boolean getPassword(UserDAO u) {
+	public boolean getPassword(UserDAO u) throws DAOExcepcion {
 		boolean result=false;
 		con = Connect.getConnect();
 		if(con!=null) {
@@ -146,7 +151,8 @@ public class UserDAO extends User implements IDAO<User>{
 				}
 			} catch (SQLException e) {
 				// TODO Auto-generated catch block
-				e.printStackTrace();
+				//e.printStackTrace();
+				throw new DAOExcepcion(e);
 			}
 	
 		}
@@ -162,10 +168,11 @@ public class UserDAO extends User implements IDAO<User>{
 	 * Inserta en la base de datos un nuevo usuario
 	 * 
 	 * @return
+	 * @throws DAOExcepcion 
 	 */
 	
 	@Override
-	public int save() {
+	public int save() throws DAOExcepcion {
 		// TODO Auto-generated method stub
 		int rs=0;
 		con = Connect.getConnect();
@@ -179,7 +186,8 @@ public class UserDAO extends User implements IDAO<User>{
 				
 			} catch (SQLException e) {
 				// TODO Auto-generated catch block
-				e.printStackTrace();
+				//e.printStackTrace();
+				throw new DAOExcepcion(e);
 			}
 			
 			
@@ -191,9 +199,10 @@ public class UserDAO extends User implements IDAO<User>{
 	/**
 	 * Edita los campos de un usuario en la BD
 	 * @return
+	 * @throws DAOExcepcion 
 	 */
 	@Override
-	public int edit() {
+	public int edit() throws DAOExcepcion {
 		// TODO Auto-generated method stub
 		int rs = 0;
 		Connection con = Connect.getConnect();
@@ -207,7 +216,8 @@ public class UserDAO extends User implements IDAO<User>{
 				rs = q.executeUpdate();
 			} catch (SQLException e) {
 				// TODO Auto-generated catch block
-				e.printStackTrace();
+				//e.printStackTrace();
+				throw new DAOExcepcion(e);
 			}
 		}
 		return rs;
@@ -216,9 +226,10 @@ public class UserDAO extends User implements IDAO<User>{
 
 	/**
 	 * Elimina un usuario de la BD
+	 * @throws DAOExcepcion 
 	 */
 	@Override
-	public int delete() {
+	public int delete() throws DAOExcepcion {
 		// TODO Auto-generated method stub
 		int rs = 0;
 		con = Connect.getConnect();
@@ -233,7 +244,8 @@ public class UserDAO extends User implements IDAO<User>{
 				this.password="";
 			} catch (SQLException e) {
 				// TODO Auto-generated catch block
-				e.printStackTrace();
+				//e.printStackTrace();
+				throw new DAOExcepcion(e);
 			}
 		}
 		return rs;
@@ -245,9 +257,10 @@ public class UserDAO extends User implements IDAO<User>{
 	 * @param u
 	 * @param l
 	 * @return
+	 * @throws DAOExcepcion 
 	 */
 	
-	public int suscribe(UserDAO u, ListReproductionDAO l) {
+	public int suscribe(UserDAO u, ListReproductionDAO l) throws DAOExcepcion {
 		int rs=0;
 		con = Connect.getConnect();
 		if (con != null) {
@@ -258,7 +271,8 @@ public class UserDAO extends User implements IDAO<User>{
 				rs = q.executeUpdate();
 			} catch (SQLException e) {
 				// TODO Auto-generated catch block
-				e.printStackTrace();
+				//e.printStackTrace();
+				throw new DAOExcepcion(e);
 			}
 
 		}
@@ -270,8 +284,9 @@ public class UserDAO extends User implements IDAO<User>{
 	 * @param u
 	 * @param l
 	 * @return
+	 * @throws DAOExcepcion 
 	 */
-	public int des_suscribe(UserDAO u, ListReproductionDAO l) {
+	public int des_suscribe(UserDAO u, ListReproductionDAO l) throws DAOExcepcion {
 		int rs=0;
 		con = Connect.getConnect();
 		if (con != null) {
@@ -282,7 +297,8 @@ public class UserDAO extends User implements IDAO<User>{
 				rs = q.executeUpdate();
 			} catch (SQLException e) {
 				// TODO Auto-generated catch block
-				e.printStackTrace();
+				//e.printStackTrace();
+				throw new DAOExcepcion(e);
 			}
 
 		}

@@ -9,7 +9,6 @@ public class Song {
 	protected String name;
 	protected Time duration;
 	protected Genero genero;
-	protected int nReproducciones;
 	protected Disk disk;
 	
 	
@@ -23,16 +22,6 @@ public class Song {
 		this.disk = disk;
 	}
 	
-	
-	public Song(String name, Time duration, Genero genero, int nReproducciones, Disk disk) {
-		super();
-		this.name = name;
-		this.duration = duration;
-		this.genero = genero;
-		this.nReproducciones = nReproducciones;
-		this.disk = disk;
-	}
-
 	public Song() {
 		// TODO Auto-generated constructor stub
 	}
@@ -61,12 +50,6 @@ public class Song {
 	}
 	public void setGenero(Genero genero) {
 		this.genero = genero;
-	}
-	public int getnReproducciones() {
-		return nReproducciones;
-	}
-	public void setnReproducciones(int nReproducciones) {
-		this.nReproducciones = nReproducciones;
 	}
 	public Disk getDisk() {
 		return disk;
@@ -99,7 +82,7 @@ public class Song {
 	@Override
 	public String toString() {
 		return "Song [id=" + id + ", name=" + name + ", duration=" + duration + ", genero=" + genero
-				+ ", nReproducciones=" + nReproducciones + ", disk=" + disk + "]";
+				+  ", disk=" + disk + "]";
 	}
 	
 	
