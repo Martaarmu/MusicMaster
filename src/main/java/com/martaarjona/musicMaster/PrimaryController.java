@@ -259,24 +259,35 @@ public class PrimaryController {
 
 	@FXML
 	void deleteLista(ActionEvent event) throws DAOExcepcion {
-
-		list = (ListReproductionDAO) this.tblListas.getSelectionModel().getSelectedItem();
-
-		if (list == null) {
+		if((ListReproductionDAO) this.tblListas.getSelectionModel().getSelectedItem()!=null) {
+			list=this.tblListas.getSelectionModel().getSelectedItem();
+			list.delete();
+			
+			Alert alert = new Alert(Alert.AlertType.INFORMATION);
+			alert.setHeaderText(null);
+			alert.setTitle("Info");
+			alert.setContentText("Canción eliminada con éxito");
+			alert.showAndWait();
+			
+		}else if((ListReproductionDAO) this.tblSuscripciones.getSelectionModel().getSelectedItem()!=null){
+			
+			list=this.tblSuscripciones.getSelectionModel().getSelectedItem();
+			list.delete();
+			
+			Alert alert = new Alert(Alert.AlertType.INFORMATION);
+			alert.setHeaderText(null);
+			alert.setTitle("Info");
+			alert.setContentText("Canción eliminada con éxito");
+			alert.showAndWait();
+		}else {
 			Alert alert = new Alert(Alert.AlertType.ERROR);
 			alert.setHeaderText(null);
 			alert.setTitle("Error");
 			alert.setContentText("Debes seleccionar una lista");
 			alert.showAndWait();
-		} else {
-			list.delete();
-
-			Alert alert = new Alert(Alert.AlertType.INFORMATION);
-			alert.setHeaderText(null);
-			alert.setTitle("Info");
-			alert.setContentText("Lista eliminada con éxito");
-			alert.showAndWait();
 		}
+
+		
 	}
 
 	@FXML

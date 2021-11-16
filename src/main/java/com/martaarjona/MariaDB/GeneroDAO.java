@@ -49,6 +49,15 @@ public class GeneroDAO extends Genero implements IDAO<Genero>{
 				// TODO Auto-generated catch block
 				//e.printStackTrace();
 				throw new DAOExcepcion(e);
+			}finally {
+				try {
+					ps.close();
+					
+				} catch (SQLException e) {
+					// TODO Auto-generated catch block
+					
+				}
+				
 			}
 	
 		}
@@ -65,8 +74,9 @@ public class GeneroDAO extends Genero implements IDAO<Genero>{
 		// TODO Auto-generated method stub
 		int rs=0;
 		if(con!=null) {
+			PreparedStatement ps=null;
 			try {
-				PreparedStatement ps = con.prepareStatement(INSERT);
+				ps = con.prepareStatement(INSERT);
 				ps.setString(1,this.name);
 				rs=ps.executeUpdate();
 				
@@ -74,6 +84,15 @@ public class GeneroDAO extends Genero implements IDAO<Genero>{
 				// TODO Auto-generated catch block
 				//e.printStackTrace();
 				throw new DAOExcepcion(e);
+			}finally {
+				try {
+					ps.close();
+					
+				} catch (SQLException e) {
+					// TODO Auto-generated catch block
+					
+				}
+				
 			}
 			
 			
@@ -90,8 +109,9 @@ public class GeneroDAO extends Genero implements IDAO<Genero>{
 		// TODO Auto-generated method stub
 		int rs=0;
 		if(con!=null) {
+			PreparedStatement ps = null;
 			try {
-				PreparedStatement ps = con.prepareStatement(UPDATE);
+				ps = con.prepareStatement(UPDATE);
 				ps.setString(1,this.name);
 				ps.setInt(2, this.id);
 				rs=ps.executeUpdate();
@@ -100,6 +120,15 @@ public class GeneroDAO extends Genero implements IDAO<Genero>{
 				// TODO Auto-generated catch block
 				//e.printStackTrace();
 				throw new DAOExcepcion(e);
+			}finally {
+				try {
+					ps.close();
+					
+				} catch (SQLException e) {
+					// TODO Auto-generated catch block
+					
+				}
+				
 			}
 			
 			
@@ -116,8 +145,9 @@ public class GeneroDAO extends Genero implements IDAO<Genero>{
 		// TODO Auto-generated method stub
 		int rs=0;
 		if(con!=null) {
+			PreparedStatement ps = null;
 			try {
-				PreparedStatement ps = con.prepareStatement(DELETE);
+				ps = con.prepareStatement(DELETE);
 				ps.setInt(1,this.id);
 				rs=ps.executeUpdate();
 				this.id=-1;
@@ -127,6 +157,15 @@ public class GeneroDAO extends Genero implements IDAO<Genero>{
 				// TODO Auto-generated catch block
 				//e.printStackTrace();
 				throw new DAOExcepcion(e);
+			}finally {
+				try {
+					ps.close();
+					
+				} catch (SQLException e) {
+					// TODO Auto-generated catch block
+					
+				}
+				
 			}
 			
 			

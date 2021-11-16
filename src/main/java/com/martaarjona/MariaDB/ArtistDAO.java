@@ -56,16 +56,30 @@ public class ArtistDAO extends Artist implements IDAO<Artist>{
 				// TODO Auto-generated catch block
 				throw new DAOExcepcion(e);
 				//e.printStackTrace();
+			}finally {
+				try {
+					ps.close();
+					rs.close();
+				} catch (SQLException e) {
+					// TODO Auto-generated catch block
+					
+				}finally {
+					try {
+						ps.close();
+						
+					} catch (SQLException e) {
+						// TODO Auto-generated catch block
+						
+					}
+					
+				}
+				
 			}
 	
 		}
 		return a;
 	}
 	
-	public List<Artist> showAll(){
-		List<Artist> result = new ArrayList<>();
-		return result;
-	}
 	
 	/**
 	 * Método que permite insertar un artista en la BD
@@ -77,8 +91,9 @@ public class ArtistDAO extends Artist implements IDAO<Artist>{
 		int rs=0;
 		con = Connect.getConnect();
 		if(con!=null) {
+			PreparedStatement ps = null;
 			try {
-				PreparedStatement ps = con.prepareStatement(INSERT);
+				ps = con.prepareStatement(INSERT);
 				ps.setString(1,this.name);
 				ps.setString(2, this.nacionality);
 				ps.setString(3, this.photo);
@@ -88,6 +103,15 @@ public class ArtistDAO extends Artist implements IDAO<Artist>{
 				// TODO Auto-generated catch block
 				throw new DAOExcepcion(e);
 				//e.printStackTrace();
+			}finally {
+				try {
+					ps.close();
+					
+				} catch (SQLException e) {
+					// TODO Auto-generated catch block
+					
+				}
+				
 			}
 			
 			
@@ -105,8 +129,9 @@ public class ArtistDAO extends Artist implements IDAO<Artist>{
 		int rs=0;
 		con = Connect.getConnect();
 		if(con!=null) {
+			PreparedStatement ps = null;
 			try {
-				PreparedStatement ps = con.prepareStatement(UPDATE);
+				ps = con.prepareStatement(UPDATE);
 				ps.setString(1,this.name);
 				ps.setString(2, this.nacionality);
 				ps.setString(3, this.photo);
@@ -117,6 +142,15 @@ public class ArtistDAO extends Artist implements IDAO<Artist>{
 				// TODO Auto-generated catch block
 				throw new DAOExcepcion(e);
 				//e.printStackTrace();
+			}finally {
+				try {
+					ps.close();
+					
+				} catch (SQLException e) {
+					// TODO Auto-generated catch block
+					
+				}
+				
 			}
 			
 			
@@ -134,8 +168,9 @@ public class ArtistDAO extends Artist implements IDAO<Artist>{
 		int rs = 0;
 		con = Connect.getConnect();
 		if (con != null) {
+			PreparedStatement q = null;
 			try {
-				PreparedStatement q = con.prepareStatement(DELETE);
+				q = con.prepareStatement(DELETE);
 				q.setInt(1, this.id);
 				rs = q.executeUpdate();
 				this.id = -1;
@@ -146,6 +181,15 @@ public class ArtistDAO extends Artist implements IDAO<Artist>{
 				// TODO Auto-generated catch block
 				//e.printStackTrace();
 				throw new DAOExcepcion(e);
+			}finally {
+				try {
+					q.close();
+					
+				} catch (SQLException e) {
+					// TODO Auto-generated catch block
+					
+				}
+				
 			}
 		}
 		return rs;

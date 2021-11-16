@@ -67,6 +67,15 @@ public class SongDAO extends Song implements IDAO<Song> {
 				// TODO Auto-generated catch block
 				throw new DAOExcepcion(e);
 				//e.printStackTrace();
+			}finally {
+				try {
+					ps.close();
+					rs.close();
+				} catch (SQLException e) {
+					// TODO Auto-generated catch block
+					
+				}
+				
 			}
 
 		}
@@ -83,8 +92,10 @@ public class SongDAO extends Song implements IDAO<Song> {
 		int rs = 0;
 		con = Connect.getConnect();
 		if (con != null) {
+			PreparedStatement ps=null;
 			try {
-				PreparedStatement ps = con.prepareStatement(INSERT);
+				//PreparedStatement ps = con.prepareStatement(INSERT);
+				ps=con.prepareStatement(INSERT);
 				ps.setString(1, this.name);
 				ps.setTime(2, this.duration);
 				ps.setInt(3, this.genero.getId());
@@ -95,6 +106,15 @@ public class SongDAO extends Song implements IDAO<Song> {
 				// TODO Auto-generated catch block
 				//e.printStackTrace();
 				throw new DAOExcepcion(e);
+			}finally {
+				try {
+					ps.close();
+					//rs.close();
+				} catch (SQLException e) {
+					// TODO Auto-generated catch block
+					
+				}
+				
 			}
 
 		}
@@ -112,8 +132,9 @@ public class SongDAO extends Song implements IDAO<Song> {
 		int rs = 0;
 		con = Connect.getConnect();
 		if (con != null) {
+			PreparedStatement ps=null;
 			try {
-				PreparedStatement ps = con.prepareStatement(UPDATE);
+				 ps = con.prepareStatement(UPDATE);
 				ps.setString(1, this.name);
 				ps.setTime(2, this.duration);
 				ps.setInt(3, this.genero.getId());
@@ -125,6 +146,15 @@ public class SongDAO extends Song implements IDAO<Song> {
 				// TODO Auto-generated catch block
 				//e.printStackTrace();
 				throw new DAOExcepcion(e);
+			}finally {
+				try {
+					ps.close();
+					//rs.close();
+				} catch (SQLException e) {
+					// TODO Auto-generated catch block
+					
+				}
+				
 			}
 
 		}
@@ -142,8 +172,9 @@ public class SongDAO extends Song implements IDAO<Song> {
 		int rs = 0;
 		con = Connect.getConnect();
 		if (con != null) {
+			PreparedStatement ps= null;
 			try {
-				PreparedStatement ps = con.prepareStatement(DELETE);
+				 ps = con.prepareStatement(DELETE);
 				ps.setInt(1, this.id);
 				rs = ps.executeUpdate();
 				this.id = -1;
@@ -156,6 +187,15 @@ public class SongDAO extends Song implements IDAO<Song> {
 				// TODO Auto-generated catch block
 				//e.printStackTrace();
 				throw new DAOExcepcion(e);
+			}finally {
+				try {
+					ps.close();
+					//rs.close();
+				} catch (SQLException e) {
+					// TODO Auto-generated catch block
+					
+				}
+				
 			}
 
 		}

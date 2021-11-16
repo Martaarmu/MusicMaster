@@ -20,11 +20,12 @@ import com.martaarjona.utils.Connect;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.scene.control.Alert;
 
 public class ListReproductionDAO extends ListReproduction implements ListDAO {
 
 	private static final String SHOWALL = "SELECT id, nombre, id_usuario, nReproduccion FROM lista_reproduccion";
-	private static final String INSERT = "INSERT INTO lista_reproduccion (nombre,id_usuario) VALUES (?,?)";
+	private static final String INSERT = "INSERT INTO lista_reproduccion (nombre,id_usuario,nReproduccion) VALUES (?,?,?)";
 	private static final String SHOWBYID = "SELECT id, nombre,id_usuario, nReproduccion FROM lista_reproduccion WHERE id=?";
 	private static final String INSERTSONG = "INSERT INTO cancion_lista (id_cancion,id_lista) VALUES (?,?)";
 	private final static String DELETE = "DELETE FROM cancion_lista WHERE id_cancion=? AND id_lista=?";
@@ -34,7 +35,7 @@ public class ListReproductionDAO extends ListReproduction implements ListDAO {
 	private static final String SHOWBYSUSCRIPCION = "SELECT l.id,l.nombre,l.id_usuario, l.nReproduccion FROM lista_reproduccion AS l ,usuario_lista WHERE usuario_lista.id_lista=l.id AND usuario_lista.id_usuario=?";
 	private static final String DELETELIST = "DELETE FROM lista_reproduccion WHERE id=?";
 	private static final String ADDREPRODUCCION = "UPDATE lista_reproduccion SET nReproduccion=? WHERE id=?";
-	//private static final String SHOWREPRODUCCION = "SELECT nReproduccion FROM lista_reproduccion";
+	
 
 	public ListReproductionDAO() {
 		super();
@@ -89,11 +90,21 @@ public class ListReproductionDAO extends ListReproduction implements ListDAO {
 				ps = con.prepareStatement(INSERT);
 				ps.setString(1, this.name);
 				ps.setInt(2, this.creator.getId());
+				ps.setInt(3, 0);
 				rs = ps.executeUpdate();
 			} catch (SQLException e) {
 				// TODO Auto-generated catch block
 				//e.printStackTrace();
 				throw new DAOExcepcion(e);
+			}finally {
+				try {
+					ps.close();
+					
+				} catch (SQLException e) {
+					// TODO Auto-generated catch block
+					
+				}
+				
 			}
 
 		}
@@ -116,8 +127,9 @@ public class ListReproductionDAO extends ListReproduction implements ListDAO {
 		int rs = 0;
 		con = Connect.getConnect();
 		if (con != null) {
+			PreparedStatement q = null;
 			try {
-				PreparedStatement q = con.prepareStatement(DELETELIST);
+				q = con.prepareStatement(DELETELIST);
 				q.setInt(1, this.id);
 				rs = q.executeUpdate();
 				this.id = -1;
@@ -127,6 +139,15 @@ public class ListReproductionDAO extends ListReproduction implements ListDAO {
 				// TODO Auto-generated catch block
 				//e.printStackTrace();
 				throw new DAOExcepcion(e);
+			}finally {
+				try {
+					q.close();
+					
+				} catch (SQLException e) {
+					// TODO Auto-generated catch block
+					
+				}
+				
 			}
 		}
 		return rs;
@@ -162,6 +183,15 @@ public class ListReproductionDAO extends ListReproduction implements ListDAO {
 				// TODO Auto-generated catch block
 				//e.printStackTrace();
 				throw new DAOExcepcion(e);
+			}finally {
+				try {
+					ps.close();
+					
+				} catch (SQLException e) {
+					// TODO Auto-generated catch block
+					
+				}
+				
 			}
 
 		}
@@ -196,6 +226,15 @@ public class ListReproductionDAO extends ListReproduction implements ListDAO {
 				// TODO Auto-generated catch block
 				//e.printStackTrace();
 				throw new DAOExcepcion(e);
+			}finally {
+				try {
+					ps.close();
+					
+				} catch (SQLException e) {
+					// TODO Auto-generated catch block
+					
+				}
+				
 			}
 		}
 		return result;
@@ -226,6 +265,15 @@ public class ListReproductionDAO extends ListReproduction implements ListDAO {
 				// TODO Auto-generated catch block
 				//e.printStackTrace();
 				throw new DAOExcepcion(e);
+			}finally {
+				try {
+					ps.close();
+					
+				} catch (SQLException e) {
+					// TODO Auto-generated catch block
+					
+				}
+				
 			}
 		}
 		return result;
@@ -259,6 +307,15 @@ public class ListReproductionDAO extends ListReproduction implements ListDAO {
 				// TODO Auto-generated catch block
 				//e.printStackTrace();
 				throw new DAOExcepcion(e);
+			}finally {
+				try {
+					ps.close();
+					
+				} catch (SQLException e) {
+					// TODO Auto-generated catch block
+					
+				}
+				
 			}
 		}
 		return result;
@@ -273,8 +330,9 @@ public class ListReproductionDAO extends ListReproduction implements ListDAO {
 		int rs = 0;
 		con = Connect.getConnect();
 		if (con != null) {
+			PreparedStatement q = null;
 			try {
-				PreparedStatement q = con.prepareStatement(INSERTSONG);
+				q = con.prepareStatement(INSERTSONG);
 				q.setInt(1, s.getId());
 				q.setInt(2, l.getId());
 				rs = q.executeUpdate();
@@ -282,6 +340,15 @@ public class ListReproductionDAO extends ListReproduction implements ListDAO {
 				// TODO Auto-generated catch block
 				//e.printStackTrace();
 				throw new DAOExcepcion(e);
+			}finally {
+				try {
+					q.close();
+					
+				} catch (SQLException e) {
+					// TODO Auto-generated catch block
+					
+				}
+				
 			}
 
 		}
@@ -299,8 +366,9 @@ public class ListReproductionDAO extends ListReproduction implements ListDAO {
 		int rs = 0;
 		con = Connect.getConnect();
 		if (con != null) {
+			PreparedStatement q = null;
 			try {
-				PreparedStatement q = con.prepareStatement(DELETE);
+				q = con.prepareStatement(DELETE);
 				q.setInt(1, s.getId());
 				q.setInt(2, l.getId());
 				rs = q.executeUpdate();
@@ -309,6 +377,15 @@ public class ListReproductionDAO extends ListReproduction implements ListDAO {
 				// TODO Auto-generated catch block
 				//e.printStackTrace();
 				throw new DAOExcepcion(e);
+			}finally {
+				try {
+					q.close();
+					
+				} catch (SQLException e) {
+					// TODO Auto-generated catch block
+					
+				}
+				
 			}
 		}
 		return rs;
@@ -326,7 +403,7 @@ public class ListReproductionDAO extends ListReproduction implements ListDAO {
 		List<SongDAO> songs = new ArrayList<>();
 		con = Connect.getConnect();
 		if (con != null) {
-			PreparedStatement q;
+			PreparedStatement q=null;
 			try {
 				q = con.prepareStatement(GETSONGS);
 				q.setInt(1, id);
@@ -345,6 +422,15 @@ public class ListReproductionDAO extends ListReproduction implements ListDAO {
 				// TODO Auto-generated catch block
 				//e.printStackTrace();
 				throw new DAOExcepcion(e);
+			}finally {
+				try {
+					q.close();
+					
+				} catch (SQLException e) {
+					// TODO Auto-generated catch block
+					
+				}
+				
 			}
 
 		}
@@ -355,7 +441,7 @@ public class ListReproductionDAO extends ListReproduction implements ListDAO {
 		int rs=0;
 		con=Connect.getConnect();
 		if(con!=null) {
-			PreparedStatement q;
+			PreparedStatement q=null;
 			try {
 				
 				q = con.prepareStatement(ADDREPRODUCCION);
@@ -369,6 +455,15 @@ public class ListReproductionDAO extends ListReproduction implements ListDAO {
 				// TODO Auto-generated catch block
 				//e.printStackTrace();
 				throw new DAOExcepcion(e);
+			}finally {
+				try {
+					q.close();
+					
+				} catch (SQLException e) {
+					// TODO Auto-generated catch block
+					
+				}
+				
 			}
 		}
 		return rs;

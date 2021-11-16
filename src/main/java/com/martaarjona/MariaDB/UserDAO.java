@@ -77,6 +77,14 @@ public class UserDAO extends User implements IDAO<User>{
 				// TODO Auto-generated catch block
 				//e.printStackTrace();
 				throw new DAOExcepcion(e);
+			}finally {
+				try {
+					ps.close();
+				} catch (SQLException e) {
+					// TODO Auto-generated catch block
+					
+				}
+				
 			}
 	
 		}
@@ -102,10 +110,7 @@ public class UserDAO extends User implements IDAO<User>{
 			try {
 				ps = con.prepareStatement(USERS);
 				rs = ps.executeQuery();
-
 				while (rs.next()) {
-					
-
 					users.add(new UserDAO(rs.getInt("id"),
 							rs.getString("nombre"),
 							rs.getString("correo"),
@@ -116,8 +121,15 @@ public class UserDAO extends User implements IDAO<User>{
 				// TODO Auto-generated catch block
 				//e.printStackTrace();
 				throw new DAOExcepcion(e);
+			}finally {
+				try {
+					ps.close();
+				} catch (SQLException e) {
+					// TODO Auto-generated catch block
+					
+				}
+				
 			}
-
 		}
 		
 		return users;
@@ -153,6 +165,14 @@ public class UserDAO extends User implements IDAO<User>{
 				// TODO Auto-generated catch block
 				//e.printStackTrace();
 				throw new DAOExcepcion(e);
+			}finally {
+				try {
+					ps.close();
+				} catch (SQLException e) {
+					// TODO Auto-generated catch block
+					
+				}
+				
 			}
 	
 		}
@@ -177,8 +197,9 @@ public class UserDAO extends User implements IDAO<User>{
 		int rs=0;
 		con = Connect.getConnect();
 		if(con!=null) {
+			PreparedStatement ps=null;
 			try {
-				PreparedStatement ps = con.prepareStatement(INSERT);
+			    ps = con.prepareStatement(INSERT);
 				ps.setString(1,this.name);
 				ps.setString(2, this.email);
 				ps.setString(3, this.password);
@@ -188,9 +209,13 @@ public class UserDAO extends User implements IDAO<User>{
 				// TODO Auto-generated catch block
 				//e.printStackTrace();
 				throw new DAOExcepcion(e);
+			}finally {
+				try {
+					ps.close();
+				} catch (SQLException e) {
+					// TODO Auto-generated catch block
+				}
 			}
-			
-			
 		}
 		return rs;
 		
@@ -207,8 +232,9 @@ public class UserDAO extends User implements IDAO<User>{
 		int rs = 0;
 		Connection con = Connect.getConnect();
 		if (con != null) {
+			PreparedStatement q=null;
 			try {
-				PreparedStatement q = con.prepareStatement(UPDATE);
+				q = con.prepareStatement(UPDATE);
 				q.setString(1, this.name);
 				q.setString(2, this.email);
 				q.setString(3, this.password);
@@ -218,6 +244,14 @@ public class UserDAO extends User implements IDAO<User>{
 				// TODO Auto-generated catch block
 				//e.printStackTrace();
 				throw new DAOExcepcion(e);
+			}finally {
+				try {
+					q.close();
+				} catch (SQLException e) {
+					// TODO Auto-generated catch block
+					
+				}
+				
 			}
 		}
 		return rs;
@@ -234,8 +268,9 @@ public class UserDAO extends User implements IDAO<User>{
 		int rs = 0;
 		con = Connect.getConnect();
 		if (con != null) {
+			PreparedStatement q = null;
 			try {
-				PreparedStatement q = con.prepareStatement(DELETE);
+				q = con.prepareStatement(DELETE);
 				q.setInt(1, this.id);
 				rs = q.executeUpdate();
 				this.id = -1;
@@ -246,6 +281,14 @@ public class UserDAO extends User implements IDAO<User>{
 				// TODO Auto-generated catch block
 				//e.printStackTrace();
 				throw new DAOExcepcion(e);
+			}finally {
+				try {
+					q.close();
+				} catch (SQLException e) {
+					// TODO Auto-generated catch block
+					
+				}
+				
 			}
 		}
 		return rs;
@@ -264,8 +307,9 @@ public class UserDAO extends User implements IDAO<User>{
 		int rs=0;
 		con = Connect.getConnect();
 		if (con != null) {
+			PreparedStatement q=null;
 			try {
-				PreparedStatement q = con.prepareStatement(SUSCRIBE);
+				q = con.prepareStatement(SUSCRIBE);
 				q.setInt(1, u.getId());
 				q.setInt(2, l.getId());
 				rs = q.executeUpdate();
@@ -273,6 +317,14 @@ public class UserDAO extends User implements IDAO<User>{
 				// TODO Auto-generated catch block
 				//e.printStackTrace();
 				throw new DAOExcepcion(e);
+			}finally {
+				try {
+					q.close();
+				} catch (SQLException e) {
+					// TODO Auto-generated catch block
+					
+				}
+				
 			}
 
 		}
@@ -290,8 +342,9 @@ public class UserDAO extends User implements IDAO<User>{
 		int rs=0;
 		con = Connect.getConnect();
 		if (con != null) {
+			PreparedStatement q = null;
 			try {
-				PreparedStatement q = con.prepareStatement(DES_SUSCRIBE);
+				q = con.prepareStatement(DES_SUSCRIBE);
 				q.setInt(1, u.getId());
 				q.setInt(2, l.getId());
 				rs = q.executeUpdate();
@@ -299,6 +352,14 @@ public class UserDAO extends User implements IDAO<User>{
 				// TODO Auto-generated catch block
 				//e.printStackTrace();
 				throw new DAOExcepcion(e);
+			}finally {
+				try {
+					q.close();
+				} catch (SQLException e) {
+					// TODO Auto-generated catch block
+					
+				}
+				
 			}
 
 		}

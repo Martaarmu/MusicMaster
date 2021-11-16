@@ -113,10 +113,19 @@ public class SecondaryController {
 
 	public void info(ActionEvent event) {
 		Song s = this.tblCanciones.getSelectionModel().getSelectedItem();
-		Alert alert = new Alert(Alert.AlertType.INFORMATION);
-		alert.setHeaderText(null);
-		alert.setTitle("Info");
-		alert.setContentText(s.getDisk().toString());
-		alert.showAndWait();
+		if(s==null) {
+			Alert alert = new Alert(Alert.AlertType.ERROR);
+			alert.setHeaderText(null);
+			alert.setTitle("Error");
+			alert.setContentText("Debes seleccionar una canción");
+			alert.showAndWait();
+		}else {
+			Alert alert = new Alert(Alert.AlertType.INFORMATION);
+			alert.setHeaderText(null);
+			alert.setTitle("Info");
+			alert.setContentText(s.getDisk().toString());
+			alert.showAndWait();
+		}
+		
 	}
 }
